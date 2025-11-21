@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>School and System Condition – RPPL</title>
+	<script src="js/school-system.data.js"></script>
+  
+	<script src="libraries/chart.js"></script>
+  <script src="libraries/papaparse.min.js"></script>
+	<script src="libraries/luxon.min.js"></script>
+	<script src="libraries/chartjs-adapter-luxon@1.js"></script>
+	
+
+	<script src="js/school-system.org.js"></script>
+	
+	<script src="js/school-system.constructs.js"></script>
+	
+	<script src="js/school-system.radar.js"></script>
+	<script src="js/school-system.overall.js"></script>
+	<script src="js/school-system.milestone.js"></script>
+	<script src="js/school-system.scatter.js"></script>
+	
+	<link rel="stylesheet" href="styles/school-system.css">
+</head>
+<body>
+
+<div class="teal-header">
+	<h2>SCHOOL AND SYSTEM CONDITION</h2>
+	
+	<div style="font-size: 13px; margin-top: -15px; margin-bottom: -10px;">
+	  <span class="subconstruct-toggle" data-group="groupA" style="display: inline-block; margin-bottom: 3px; margin-top: -10px;">
+		<span style="background-color: #A98FD4; color: white; font-weight: 600; padding: 2px 8px; border-radius: 6px; margin-right: 6px;">A</span>
+		<b>HQIM Coherence:</b> HQIM is coherent with other systems and instructional vision for student success and equity (assessments, teacher evaluation, RTI, supplemental materials)
+	  </span><br>
+	  
+	  <span class="subconstruct-toggle" data-group="groupB" style="display: inline-block;">
+		<span style="background-color: #4C9AFF; color: white; font-weight: 600; padding: 2px 8px; border-radius: 6px; margin-right: 6px;">B</span>
+		<b>Foundational Structures:</b> Foundational structures for equitable HQIM adoption and implementation are in place (time for PL, access to HQIM materials, messaging, ongoing monitoring, etc.)
+	  </span>
+	</div>
+</div>
+
+
+
+<div class="white-box">
+
+
+  <!-- ✅ FIXED MENU LOCATION (above flex row) -->
+  <div style="display: flex; justify-content: flex-end; margin-bottom: 10px; padding-right: 16px;">
+    <div class="chart-menu">
+      
+			<!-- <button class="menu-btn active" data-view="radar">RADAR CHART SUMMARY</button> -->
+			<div class="menu-btn-wrapper" style="position: relative; display: inline-block;">
+				<button class="menu-btn" data-view="radar">
+					ORG SNAPSHOT
+				</button>
+				<span class="info-icon" data-tooltip-id="radarchart-explainer"><i>i</i></span>
+			</div>
+			
+			<div class="menu-btn-wrapper" style="position: relative; display: inline-block;">
+				<button class="menu-btn" data-view="overall">
+					TRENDS OVER TIME
+				</button>
+				<span class="info-icon" data-tooltip-id="netdiff-explainer"><i>i</i></span>
+			</div>
+
+      <!-- <button class="menu-btn" data-view="milestone">MILESTONE GRAPH</button> -->
+			
+			<div class="menu-btn-wrapper" style="position: relative; display: inline-block;">
+				<button class="menu-btn" data-view="milestone">
+					PROGRESS TOWARDS GOALS
+				</button>
+				<span class="info-icon" data-tooltip-id="milestonegraph-explainer"><i>i</i></span>
+			</div>
+      
+			<!-- <button class="menu-btn" data-view="scatter">SCATTERPLOT</button> -->
+			
+			<div class="menu-btn-wrapper" style="position: relative; display: inline-block;">
+				<button class="menu-btn" data-view="scatter">
+					ITEM-LEVEL RELATIONSHIPS
+				</button>
+				<span class="info-icon" data-tooltip-id="scatterplot-explainer"><i>i</i></span>
+			</div>
+    </div>
+  </div>
+  
+  <div style="display: flex; gap: 24px; height: 100%;">
+
+	<!-- 🧭 Labels Column (20%) -->
+	<div style="
+	  flex: 0 0 20%;
+	  display: flex;
+	  flex-direction: column;
+	  justify-content: space-between;
+	  font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+	  font-size: 16px;
+	  color: #222;
+	  padding: 20px 0;
+	">
+
+	  <!-- Top Label: Your Org -->
+		
+		<div id="milestoneLegendBlock" style="
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 8px;
+			margin-top: 30%;
+			padding-left: 20%;
+		">
+
+			<!-- First row: icon + label -->			
+			<div style="display: flex; align-items: center; gap: 10px;">
+				<div style="
+					width: 14px;
+					height: 14px;
+					border-radius: 50%;
+					background-color: #0E9F94;
+				" id="yourorgcircle"></div>
+				<div style="font-weight: 600;" id="yourorglabel">Your Organization</div>
+			</div>
+
+			<!-- Second row: toggle -->
+			<label class="toggle-switch" id="chartTypeToggleContainer" style="display: none;">
+				<button id="chartModeBtn" class="ep-btn ep-btn-primary" style="display: none;">CHART MODE: LINES</button>
+			</label>
+			
+
+		</div>
+
+
+
+
+	  <!-- Spacer (optional for flexibility) -->
+	  <div style="flex-grow: 1;"></div>
+
+	  <!-- Bottom Label: Global Average -->
+		<div id="globalToggleContainer" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 70%; padding-left: 20%;">
+			<div style="display: flex; align-items: center; gap: 10px;">
+				<div style="width: 14px; height: 14px; border-radius: 50%; background-color: #FFB84D;"></div>
+				<div style="font-weight: 600;">Global Aggregated Average</div>
+			</div>
+			<label class="toggle-switch">
+				<input type="checkbox" id="includeSelfToggle" />
+				<span class="slider"></span>
+				<span class="toggle-label">Include my Org in Aggregate</span>
+			</label>
+		</div>
+
+
+	</div>
+
+
+    <!-- 📊 Chart Column (80%) -->
+    <div id="chart-area" style="flex: 1; display: flex; align-items: stretch;">  
+      <canvas id="networthChart" width="900" height="380" style="width: 100%;"></canvas>
+    </div>
+
+
+
+  </div>
+</div>
+
+
+
+<div id="custom-tooltip" class="custom-tooltip">
+  <div id="tooltip-text"></div>
+  <canvas id="tooltip-chart" width="360" height="120" style="display: none;"></canvas>
+</div>
+
+
+
+<!-- ORG SNAPSHOT (Radar) -->
+<div id="radarchart-explainer-tooltip" class="chart-tooltip explainer" style="display:none;">
+  <div class="explainer-head">
+    <span class="explainer-title">Org Snapshot</span>
+  </div>
+  <div class="explainer-body">
+    <div class="explainer-grid">
+      <div class="explainer-copy">
+        <p><strong>What you see</strong><br>
+        A radar comparing your org vs. the group across key sub-constructs.</p>
+        <p><strong>How to read</strong><br>
+        Farther from the center = higher average score. Matching shapes ≈ parity.</p>
+        <div class="explainer-table-wrap">
+          <table class="demo-table">
+            <thead><tr><th>Sub-construct</th><th>Your</th><th>Global</th></tr></thead>
+            <tbody>
+              <tr><td>(A) Coherence</td><td>3.6</td><td>3.2</td></tr>
+              <tr><td>(B) Foundations</td><td>3.1</td><td>3.4</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="explainer-chart">
+        <!-- square canvas works best for radar -->
+        <canvas id="demoRadar" width="300" height="300" style="display:block;"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TRENDS OVER TIME -->
+<div id="netdiff-explainer-tooltip" class="chart-tooltip explainer" style="display:none;">
+  <div class="explainer-head">
+    <span class="explainer-title">Trends Over Time</span>
+    <button class="explainer-close" aria-label="Close" type="button">×</button>
+  </div>
+  <div class="explainer-body">
+    <div class="explainer-grid">
+      <div class="explainer-copy">
+        <p>This view shows your org’s monthly average vs. the global average. Your line is solid; the global markers are hollow to show the pairing without extra line clutter.</p>
+        <div class="explainer-table-wrap">
+          <table class="demo-table">
+            <thead><tr><th>Month</th><th>Your Org</th><th>Global</th></tr></thead>
+            <tbody>
+              <tr><td>Feb</td><td>1.8</td><td>3.4</td></tr>
+              <tr><td>Mar</td><td>3.0</td><td>3.5</td></tr>
+              <tr><td>Apr</td><td>4.3</td><td>3.5</td></tr>
+              <tr><td>May</td><td>5.0</td><td>3.0</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="explainer-chart">
+        <!-- 4:3 works nicely for small line charts -->
+        <canvas id="demoTrend" width="520" height="360" style="display:block;"></canvas>
+        <span class="milestone-pill" style="display:none;">First goal hit</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GOALS ACHIEVED -->
+<div id="milestonegraph-explainer-tooltip" class="chart-tooltip explainer" style="display:none;">
+  <div class="explainer-head">
+    <span class="explainer-title">Goals Achieved</span>
+    <button class="explainer-close" aria-label="Close" type="button">×</button>
+  </div>
+  <div class="explainer-body">
+    <div class="explainer-grid">
+      <div class="explainer-copy">
+        <p><strong>What you see</strong><br>
+        When a target threshold is first met. We highlight the first month your org clears the goal.</p>
+        <p><strong>How to read</strong><br>
+        The horizontal line is the goal; the pulsing dot shows the first month meeting/exceeding it.</p>
+        <div class="explainer-table-wrap">
+          <table class="demo-table">
+            <thead><tr><th>Month</th><th>Your</th><th>Goal ≥</th></tr></thead>
+            <tbody>
+              <tr><td>Feb</td><td>3.1</td><td>3.5</td></tr>
+              <tr><td>Mar</td><td>3.4</td><td>3.5</td></tr>
+              <tr><td>Apr</td><td>3.6</td><td>3.5</td></tr>
+              <tr><td>May</td><td>3.8</td><td>3.5</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="explainer-chart">
+        <canvas id="demoMilestone" width="520" height="360" style="display:block;"></canvas>
+        <div class="milestone-pill">First met: Apr</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ITEM-LEVEL RELATIONSHIPS -->
+<div id="scatterplot-explainer-tooltip" class="chart-tooltip explainer" style="display:none;">
+  <div class="explainer-head">
+    <span class="explainer-title">Item-Level Relationships</span>
+    <button class="explainer-close" aria-label="Close" type="button">×</button>
+  </div>
+  <div class="explainer-body">
+    <div class="explainer-grid">
+      <div class="explainer-copy">
+        <p><strong>What you see</strong><br>
+        Pick any two items to see how responses co-move. Dots = individual (or monthly) pairs. The diagonal is y = x; the grey curve is the trend.</p>
+        <p><strong>How to read</strong><br>
+        Clusters above the diagonal → your values greater than global; below → lower. The curve shows overall association.</p>
+        <div class="explainer-table-wrap">
+          <table class="demo-table">
+            <thead><tr><th>X (Your)</th><th>Y (Global)</th></tr></thead>
+            <tbody>
+              <tr><td>2.0</td><td>3.2</td></tr>
+              <tr><td>3.1</td><td>3.4</td></tr>
+              <tr><td>4.2</td><td>3.6</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="explainer-chart">
+        <canvas id="demoScatter" width="520" height="360" style="display:block;"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/school-system.tutorial.js"></script>
+<script src="js/school-system.index.js"></script>	
+
+</body>
+</html>

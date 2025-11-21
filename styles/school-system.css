@@ -1,0 +1,460 @@
+  body { font-family: sans-serif; padding: 20px; background: transparent;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;}
+
+  canvas { max-width: 100%; height: 100%; }
+	
+	.subconstruct-toggle {
+	  display: inline-block;
+	  transition: transform 0.2s ease, box-shadow 0.2s ease;
+	  cursor: pointer;
+	}
+
+	.subconstruct-toggle:hover {
+	  transform: translateY(-1px);
+	  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+	}
+	
+	.grayed-out {
+	  color: #ccc;
+	}
+
+	.teal-header {
+	  background-color: #0E9F94;
+	  color: white;
+	  padding: 30px;
+	  padding-top: 10px;
+	  border-radius: 8px 8px 0 0;
+	  margin-top: 0;
+	  margin-bottom: 0;
+	  background-image: url('../assets/tic-tac-toe.png');
+	  background-blend-mode: multiply;
+	  background-size: auto;
+	  background-repeat: repeat;
+	}
+
+	.white-box {
+	  border: 2px solid #008080;
+	  padding: 24px 32px;
+	  border-radius: 0 0 8px 8px;
+	  background-color: white;
+	  height: 80vh;
+	  display: flex;
+	  flex-direction: column;
+	}
+
+	.custom-tooltip {
+	  position: absolute;
+	  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+	  background: transparent;
+	  color: white;
+	  padding: 16px 20px;
+	  border-radius: 8px;
+	  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+	  pointer-events: none;
+	  z-index: 10;
+	  display: none;
+	  width: 500px;
+	  max-width: 500px;
+	}
+
+
+
+	/* toggle switch */
+	.toggle-switch {
+	  display: flex;
+	  align-items: center;
+	  font-size: 15px;
+	  font-weight: 400; /* lighter font */
+	  color: #222;
+	  gap: 8px;
+	}
+
+	.toggle-switch input {
+	  display: none;
+	}
+
+	.toggle-switch .slider {
+	  width: 44px;
+	  height: 24px;
+	  background-color: #ccc; /* gray background when off */
+	  border-radius: 24px;
+	  position: relative;
+	  transition: background-color 0.3s;
+	  cursor: pointer;
+	}
+
+	.toggle-switch .slider::before {
+	  content: "";
+	  position: absolute;
+	  top: 3px;
+	  left: 3px;
+	  width: 18px;
+	  height: 18px;
+	  background-color: white;
+	  border-radius: 50%;
+	  transition: transform 0.3s;
+	}
+
+	.toggle-switch input:checked + .slider {
+	  background-color: #0E9F94; /* teal when on */
+	}
+
+	.toggle-switch input:checked + .slider::before {
+	  transform: translateX(20px);
+	}
+
+	/* For Chart Menus the ones inside the modal that appears when you click a construct */
+
+	.chart-menu {
+	  display: flex;
+	  gap: 12px;
+	  font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+	}
+
+	/* Base style for all buttons */
+	.menu-btn {
+	  padding: 8px 20px;
+	  font-size: 13px;
+	  font-weight: 600;
+	  border: 1px solid #0E9F94;
+	  border-radius: 12px;
+	  background-color: white;
+	  color: #0E9F94;
+	  cursor: pointer;
+	  transition: background-color 0.25s ease, color 0.25s ease;
+	  margin: 2px;
+	  padding: 10px;
+	}
+
+	/* On hover: soft teal background */
+	.menu-btn:hover {
+	  background-color: #e0f7f6;
+	}
+
+	/* Active (selected tab) */
+	.menu-btn.active {
+	  background-color: #0E9F94;
+	  color: white;
+	}
+	
+
+
+	.info-icon {
+		position: absolute;
+		top: -5px;
+		right: -2px;
+		width: 16px;
+		height: 16px;
+		border-radius: 50%;
+		background-color: #0E9F94; /* your teal */
+		color: white;
+		font-style: italic;
+		font-size: 13px;
+		font-weight: bold;
+		font-family: 'Segoe UI', sans-serif;
+		text-align: center;
+		line-height: 16px;
+		cursor: pointer;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+		transition: transform 0.2s ease;
+		z-index: 2;
+	}
+
+	.info-icon:hover {
+		transform: scale(1.1);
+	}
+
+
+
+	.chart-tooltip {
+		position: absolute;
+		box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+		background: rgba(0, 0, 0, 0.85);
+		color: white;
+		padding: 16px 20px;
+		border-radius: 8px;
+		pointer-events: none;
+		z-index: 10;
+		display: none;
+		width: 500px;
+		max-width: 500px;
+		font-size: 13px;
+		font-family: 'Segoe UI', sans-serif;
+		transform: translateX(-500px);
+	}
+
+	/* CHART TYPE CYCLER */
+
+	#chartModeBtn {
+		--teal:   #0E9F94;  /* RPPL header teal */
+		--amber:  #F4A300;  /* arrow/orange */
+		--gold:   #FFB84D;  /* bar fill */
+		--ink:    #0b3a36;
+
+		position: relative;
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
+		padding: 10px 16px;
+		border-radius: 999px;
+		border: 1px solid rgba(0,0,0,.06);
+		font-weight: 700;
+		letter-spacing: .3px;
+		text-transform: uppercase;
+		color: #fff;
+		cursor: pointer;
+		transition: transform .08s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
+		box-shadow: 0 6px 18px rgba(14,159,148,.18);
+		user-select: none;
+	}
+
+	/* Mode-specific skins (we flip this via data-mode in JS) */
+	#chartModeBtn[data-mode="lines"] {
+		background: linear-gradient(180deg, var(--teal), #0c7f79);
+		border-color: rgba(14,159,148,.35);
+	}
+	#chartModeBtn[data-mode="bars"] {
+		background: linear-gradient(180deg, var(--gold), #eaa73e);
+		border-color: rgba(244,163,0,.35);
+		color: #222;
+		box-shadow: 0 6px 18px rgba(244,163,0,.22);
+	}
+	#chartModeBtn[data-mode="net"] {
+		background: linear-gradient(180deg, #26413c, #1a2c28);
+		border-color: rgba(255,255,255,.12);
+		box-shadow: 0 6px 18px rgba(0,0,0,.25);
+	}
+
+	/* Little mode dot */
+	#chartModeBtn::before {
+		content: "";
+		width: 10px; height: 10px;
+		border-radius: 50%;
+		background: currentColor;
+		opacity: .9;
+		box-shadow: inset 0 0 0 2px rgba(255,255,255,.35);
+	}
+	#chartModeBtn[data-mode="lines"]::before { background: #bff3ee; }
+	#chartModeBtn[data-mode="bars"]::before  { background: #fff2cc; }
+	#chartModeBtn[data-mode="net"]::before   { background: #9ad1c9; }
+
+	/* Hover/active/focus */
+	#chartModeBtn:hover {
+		transform: translateY(-1px);
+		box-shadow: 0 10px 24px rgba(14,159,148,.20);
+	}
+	#chartModeBtn:active {
+		transform: translateY(0);
+		box-shadow: 0 6px 14px rgba(0,0,0,.18);
+	}
+	#chartModeBtn:focus-visible {
+		outline: 3px solid rgba(14,159,148,.35);
+		outline-offset: 2px;
+		border-radius: 14px;
+	}
+
+	/* Optional micro “pulse” on click */
+	#chartModeBtn.pulse { animation: btnPulse .18s ease; }
+	@keyframes btnPulse {
+		0% { transform: scale(1); }
+		50% { transform: scale(0.98); }
+		100% { transform: scale(1); }
+	}
+	
+	
+	
+	/* Relationship Explorer layout */
+	.rel-chart-wrap {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	.rel-chart-inner {
+		/* ensure the chart gets space even when controls wrap */
+		min-height: 340px;
+	}
+
+	.rel-controls.rel-controls-bottom {
+		display: flex;
+		align-items: center;
+		gap: 14px;
+		flex-wrap: wrap;
+		padding: 10px 12px;
+		border: 1px solid #e6eef2;
+		border-radius: 10px;
+		background: #f8fbfb;
+	}
+
+	.rel-control {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		font-size: 13px;
+		color: #223;
+	}
+
+	.rel-select {
+		max-width: min(520px, 48vw); /* keep inside modal on small screens */
+		width: 100%;
+		padding: 6px 8px;
+		border: 1px solid #cfd8dc;
+		border-radius: 6px;
+		background: #fff;
+	}
+
+	.rel-hint {
+		font-size: 12px;
+		color: #6b7a84;
+	}
+
+
+	/* rel override */
+	
+	/* controls row */
+	.rel-controls {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		flex-wrap: nowrap;           /* keep on one line by default */
+	}
+
+	/* each label+select block shares space */
+	.rel-control {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		flex: 1 1 320px;             /* flex-grow | flex-shrink | flex-basis */
+		min-width: 260px;            /* don’t get too skinny */
+		max-width: 520px;            /* cap to avoid swallowing the row */
+		white-space: nowrap;         /* keep the label (“X”, “Y”) on one line */
+	}
+
+	/* the <select> fills its block */
+	.rel-control .rel-select {
+		width: 100%;
+		min-width: 0;                /* allow flex to actually shrink it */
+	}
+
+	/* on very small screens, allow wrapping to two lines gracefully */
+	@media (max-width: 720px) {
+		.rel-controls { flex-wrap: wrap; }
+		.rel-control  { flex: 1 1 100%; max-width: none; }
+	}
+	
+	/* Explainer look & layout */
+	/* === Explainer container === */
+	.chart-tooltip.explainer{
+		position:absolute;
+		z-index:9999;
+		background:#fff;
+		border:1px solid #e6eef2;
+		border-radius:12px;
+		box-shadow:0 12px 32px rgba(0,0,0,.12);
+		width:min(90vw, 960px);          /* clamp to viewport so it never overshoots */
+		overflow:hidden;
+	}
+
+	/* Header bar */
+	.explainer-head{
+		display:flex;align-items:center;gap:10px;
+		padding:10px 14px;
+		background:#0E9F94;color:#fff;font-weight:700;
+		border-radius:12px 12px 0 0;
+	}
+	.explainer-title{font-size:15px;letter-spacing:.2px;}
+	.explainer-close{
+		margin-left:auto;background:transparent;border:0;color:#fff;
+		font-size:18px;line-height:1;cursor:pointer;padding:4px 6px;border-radius:8px;
+	}
+	.explainer-close:hover{background:rgba(255,255,255,.15);}
+
+	/* Body */
+	.explainer-body{padding:12px 14px 14px;}
+
+	/* Two-column layout */
+	.explainer-grid{
+		display:grid;
+		grid-template-columns:minmax(260px,1.1fr) minmax(360px,1.2fr);
+		gap:14px;align-items:start;
+	}
+
+	/* Copy + table */
+	.explainer-copy p{margin:6px 0;line-height:1.45;color:#24323b;font-size:13px;}
+	.explainer-table-wrap{margin-top:10px;border:1px solid #e6eef2;border-radius:8px;overflow:hidden;}
+	.demo-table{width:100%;border-collapse:collapse;font-size:12px;}
+	.demo-table thead th{
+		background:#f7fbfb;color:#24323b !important;
+		text-align:left;padding:6px 8px;border-bottom:1px solid #e6eef2;font-weight:600;
+	}
+	.demo-table td{padding:6px 8px;border-bottom:1px solid #f0f4f6;color:#2b3a43;}
+	.demo-table tbody tr:last-child td{border-bottom:0;}
+
+	/* Chart column – add breathing room + clip overspill */
+	.explainer-chart{position:relative;padding:6px;overflow:hidden;min-height:240px;}
+	.explainer-chart canvas{width:100% !important;height:260px !important;display:block;}
+
+	/* Milestone pill */
+	.milestone-pill{
+		position:absolute;right:8px;bottom:8px;background:#e8f8f2;color:#147a6f;
+		font-size:11px;padding:4px 8px;border-radius:999px;border:1px solid #bfe7de;
+	}
+
+	/* Stack on small screens */
+	@media (max-width:860px){
+		.chart-tooltip.explainer{width:min(96vw,720px);}
+		.explainer-grid{grid-template-columns:1fr;}
+		.explainer-chart canvas{height:240px !important;}
+	}
+
+	
+	
+	
+/* Let explainers ignore the base tooltip transform and clipping */
+.chart-tooltip.explainer { 
+  transform: none !important; 
+  overflow: visible !important; 
+  background: #fff; 
+  color: #24323b;
+}
+
+/* Don’t clip chart edges inside the chart column */
+.explainer-chart { 
+  overflow: visible !important; 
+}
+
+/* Make sure our canvases aren’t forced to 100% height by the global rule */
+.chart-tooltip.explainer canvas {
+  width: 100% !important;
+  height: auto !important;     /* respect the width/height attributes ratio */
+  display: block;
+}
+
+
+
+/* Allow interaction and prevent inherited translate from base tooltip */
+.chart-tooltip.explainer{
+  pointer-events: auto !important;
+  transform: none !important;
+}
+
+
+/* === WIDEN EXPLAINER MODAL (desktop) === */
+/* === NARROWER EXPLAINER MODAL (desktop) === */
+.chart-tooltip.explainer{
+  width: min(94vw, 980px) !important;   /* was 98vw / 1200px */
+  max-width: 980px !important;
+}
+
+/* Scale down grid + canvas a bit */
+@media (min-width: 900px){
+  .explainer-body{ padding: 10px 12px 12px; }
+  .explainer-grid{
+    grid-template-columns: minmax(340px, 1fr) minmax(480px, 1.1fr);
+    gap: 14px;
+  }
+  .explainer-chart{ min-height: 230px; }
+  .explainer-chart canvas{ height: 260px !important; }  /* was 320px */
+}

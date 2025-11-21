@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RPPL Insights Homepage</title>
+  <link rel="stylesheet" href="styles/rpplmasterstyles.css">
+  <script src="libraries/chart.js"></script>
+	
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-content">
+      <h1 style="margin-left: 30px">RPPL Insights</h1>
+      <span style="margin-left: 30px" class="header-date">Build: v.1.11.21.b.Nov.2025</span>
+			<div id="loginBanner" class="login-banner" aria-live="polite"></div>
+			<button id="signOut" class="signout-btn" style="margin-left:10px">Sign out</button>
+    </div>
+  </header>
+
+  <div class="container">
+	
+		<svg id="arrow-layer" class="arrow-layer" preserveAspectRatio="none"></svg>
+		
+		<div class="hqim-box top-box" style="position: relative;" data-box="school-system">
+			<div class="box-header">
+				<h1>SCHOOL AND SYSTEM CONDITION</h1>
+				<h2>HQIM implementation is supported by and integrated with existing infrastructure</h2>
+			</div>
+			<div class="box-body">
+				<div class="point"><span class="label">A.</span> HQIM is coherent with other systems and instructional vision for student success and equity (assessments, teacher evaluation, RTI, supplemental materials)</div>
+				<div class="point"><span class="label">B.</span> Foundational structures for equitable HQIM adoption and implementation are in place (time for PL, access to HQIM materials, messaging, ongoing monitoring, etc.) </div>
+				<div class="point"><span class="label"></span> </div>
+			</div>
+
+			<!-- Yellow floating button -->
+			<button class="explore-btn" >Click to Explore</button>
+		</div>
+
+		<!-- <div class="arrow down arrow-school-to-pl"></div> -->
+
+
+    <!-- PROFESSIONAL LEARNING -->
+    <div class="hqim-box top-box" data-box="professional-learning">
+      <div class="box-header">
+        <h1>PROFESSIONAL LEARNING</h1>
+        <h2>PL engages teachers in opportunities to build core skills for implementing HQIM</h2>
+      </div>
+      <div class="box-body">
+        <div class="point"><span class="label">A.</span> PL provides opportunities for guided practice, reflection, and feedback with adapting HQIM for student needs and identities</div>
+        <div class="point"><span class="label">B.</span> Teachers perceive PL to be relevant to their individual needs</div>
+				<div class="point"><span class="label">C.</span> Teachers perceive PL to be helpful for improving their ability to adapt HQIM for student needs and identities</div>
+        <!-- <div class="point"><span class="label">C.</span> Teachers perceive PL to be helpful...</div> -->
+      </div>
+			<button class="explore-btn" style="z-index: 10">Click to Explore</button>
+    </div>
+    
+		<!-- 
+		<div class="arrow down arrow-pl-down-left"></div>
+    <div class="arrow down arrow-pl-down-right"></div>
+		-->
+
+    <!-- MIDDLE ROW -->
+    <div class="row">
+      <!-- INSTRUCTIONAL PRACTICE -->
+      <div class="hqim-box half-box" data-box="instructional-practice">
+        <div class="box-header">
+          <h1>INSTRUCTIONAL PRACTICE</h1>
+          <h2> Teachers implement HQIM with integrity while adapting to their students’ needs and identities</h2>
+        </div>
+        <div class="box-body">
+          <div class="point"><span class="label">A.</span>  Teachers maintain integrity to core components of HQIM (text quality, grade-level rigor, standards-alignment, accurate content portrayal) for all students*</div>
+          <div class="point"><span class="label">B.</span> Implementation of HQIM is adapted for student learning needs*</div>
+          <div class="point"><span class="label">C.</span>  HQIM is adapted to be culturally and linguistically responsive and affirming*</div>
+        </div>
+				<button class="explore-btn" >Click to Explore</button>
+      </div>
+
+      <!-- TEACHER BELIEF AND MINDSETS -->
+      <div class="hqim-box half-box" data-box="teacher-belief">
+        <div class="box-header">
+          <h1>TEACHER BELIEF AND MINDSETS</h1>
+          <h2>Teachers see adapting HQIM for students’ needs and identities in ways that maintain integrity as a core part of their role</h2>
+        </div>
+        <div class="box-body">
+          <div class="point"><span class="label">A.</span> Believe all students can engage in the rigorous grade-level tasks included in HQIM and supporting this engagement is the role of a teacher*</div>
+          <div class="point"><span class="label">B.</span>  Believe in the importance and value of culturally and  linguistically affirming instruction*</div>
+        </div>
+				<button class="explore-btn" >Click to Explore</button>
+      </div>
+    </div>
+    <!-- <div class="arrow-horizontal arrow-horizontal-connector both"></div> -->
+
+    <!-- OUTCOME ARROWS -->
+		<!--
+    <div class="arrow down arrow-ip-to-social"></div>
+    <div class="arrow down arrow-mindset-to-acad"></div>
+    <div class="arrow-diagonal arrow-diagonal-left"></div>
+    <div class="arrow-diagonal arrow-diagonal-right"></div>
+		-->
+
+    <!-- OUTCOMES ROW -->
+    <div class="row">
+      <!-- SOCIAL OUTCOMES -->
+      <div class="hqim-box half-box" data-box="student-social-outcomes">
+        <div class="box-header">
+          <h1>STUDENT SOCIAL-EMOTIONAL OUTCOMES</h1>
+          <h2>Students have positive learning experiences</h2>
+        </div>
+        <div class="box-body">
+          <div class="point"><span class="label">A.</span> Belonging as part of classroom community.</div>
+          <div class="point"><span class="label">B.</span> Feeling affirmed in identity</div>
+        </div>
+				<button class="explore-btn" >Click to Explore</button>
+      </div>
+
+      <!-- ACADEMIC OUTCOMES -->
+      <div class="hqim-box half-box" data-box="student-academic-outcomes">
+        <div class="box-header">
+          <h1>STUDENT ACADEMIC OUTCOMES</h1>
+          <h2>Students master grade-level content</h2>
+        </div>
+        <div class="box-body">
+          <div class="point"><span class="label">A.</span> Engaging deeply with content through the work of the lesson</div>
+          <div class="point"><span class="label">B.</span> Meeting grade-level proficiency standards</div>
+        </div>
+				<button class="explore-btn" >Click to Explore</button>
+      </div>
+    </div>
+
+    <!-- <div class="arrow-horizontal arrow-horizontal-outcomes both" style="margin-top: -60px"></div> -->
+
+  </div>
+  
+  <!-- modals -->
+	
+	<!-- Modal Overlay for School and System Condition -->
+	<div id="school-system-modal" class="modal-overlay">
+		<div class="modal-content">
+			<!-- The data-close matches this modal's id -->
+			<span class="close-button" data-close="school-system-modal">×</span>
+			
+			<!-- Chart Placeholder -->
+			<iframe src="visualizer.html?construct=school-system"
+							style="width: 100%; height: 100%; border: none;"></iframe>
+		</div>
+	</div>
+
+	<!-- Modal Overlay for Professional Learning -->
+	<div id="professional-learning-modal" class="modal-overlay">
+		<div class="modal-content">
+			<!-- The data-close matches this modal's id -->
+			<span class="close-button" data-close="professional-learning-modal">×</span>
+			
+			<!-- Chart Placeholder -->
+			<iframe src="visualizer.html?construct=professional-learning"
+							style="width: 100%; height: 100%; border: none;"></iframe>
+		</div>
+	</div>
+	
+	<!-- Modal Overlay for Professional Learning -->
+	<div id="instructional-practice-modal" class="modal-overlay">
+		<div class="modal-content">
+			<!-- The data-close matches this modal's id -->
+			<span class="close-button" data-close="instructional-practice-modal">×</span>
+			
+			<!-- Chart Placeholder -->
+			<iframe src="visualizer.html?construct=instructional-practice"
+							style="width: 100%; height: 100%; border: none;"></iframe>
+		</div>
+	</div>
+	
+		<!-- Modal Overlay for Professional Learning -->
+	<div id="teacher-belief-modal" class="modal-overlay">
+		<div class="modal-content">
+			<!-- The data-close matches this modal's id -->
+			<span class="close-button" data-close="teacher-belief-modal">×</span>
+			
+			<!-- Chart Placeholder -->
+			<iframe src="visualizer.html?construct=teacher-belief"
+							style="width: 100%; height: 100%; border: none;"></iframe>
+		</div>
+	</div>
+	
+	<div id="student-social-outcomes-modal" class="modal-overlay">
+		<div class="modal-content">
+			<!-- The data-close matches this modal's id -->
+			<span class="close-button" data-close="student-social-outcomes-modal">×</span>
+			
+			<!-- Chart Placeholder -->
+			<iframe src="visualizer.html?construct=student-social-outcomes"
+							style="width: 100%; height: 100%; border: none;"></iframe>
+		</div>
+	</div>
+
+	<div id="student-academic-outcomes-modal" class="modal-overlay">
+		<div class="modal-content">
+			<!-- The data-close matches this modal's id -->
+			<span class="close-button" data-close="student-academic-outcomes-modal">×</span>
+			
+			<!-- Chart Placeholder -->
+			<iframe src="visualizer.html?construct=student-academic-outcomes"
+							style="width: 100%; height: 100%; border: none;"></iframe>
+
+		</div>
+	</div>	
+
+
+	<!-- Login Modal -->
+	<!--
+	<div id="loginModal" style="position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:9999;">
+		<div style="background:#fff;width:min(92vw,420px);padding:20px 20px 16px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.25);font-family:system-ui,Segoe UI,Arial;">
+			<h3 style="margin:0 0 8px;">Sign in</h3>
+			<p style="margin:0 0 16px;color:#555;font-size:14px;">Enter your username to load the correct dataset.</p>
+
+			<form id="loginForm">
+				<label style="display:block;margin-bottom:10px;">
+					<span style="display:block;font-size:13px;color:#333;margin-bottom:4px;">Username</span>
+					<input id="loginUsername" type="text" autocomplete="username" required
+								 style="width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;"/>
+				</label>
+
+				<label style="display:block;margin-bottom:14px;">
+					<span style="display:block;font-size:13px;color:#333;margin-bottom:4px;">Password (optional)</span>
+					<input id="loginPassword" type="password" autocomplete="current-password"
+								 placeholder="Leave blank if not used"
+								 style="width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;"/>
+				</label>
+
+				<div id="loginError" style="display:none;color:#b00020;font-size:13px;margin:6px 0 10px;"></div>
+
+				<div style="display:flex;gap:8px;justify-content:flex-end;">
+					<button type="button" id="loginCancelBtn"
+									style="padding:8px 12px;border:0;background:#eee;border-radius:8px;cursor:pointer;">Cancel</button>
+					<button type="submit"
+									style="padding:8px 12px;border:0;background:#343796;color:#fff;border-radius:8px;cursor:pointer;">
+						Continue
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+  -->
+
+	<div id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+		<div class="card">
+			<header>
+				<h3 id="loginTitle">Sign in to RPPL Insights</h3>
+				<p class="sub">Enter your credentials to continue.</p>
+			</header>
+
+			<form id="loginForm" class="body">
+				<label>
+					<span class="lbl">Username</span>
+					<input id="loginUsername" type="text" required autocomplete="username">
+				</label>
+
+				<label>
+					<span class="lbl">Password</span>
+					<input id="loginPassword" type="password" required autocomplete="current-password">
+				</label>
+
+				<div id="loginError"></div>
+
+				<div class="actions">
+					<button type="button" id="loginCancelBtn">Cancel</button>
+					<button type="submit" class="primary">Continue</button>
+				</div>
+			</form>
+		</div>
+	</div>
+  
+  <footer class="site-footer">
+    RPPL Insights © RPPL 2025
+  </footer>
+  
+  <script src="libraries/chart.umd.js"></script>
+  <script src="libraries/papaparse.min.js"></script>
+  <script src="js/rpplmasterscripts.js"></script>
+	<script src="js/login.js"></script>
+	
+	<script>
+	
+	
+	(function() {
+		const svg = document.getElementById('arrow-layer');
+		const container = document.querySelector('.container');
+		if (!svg || !container) return;
+
+		// --- CONNECTIONS (updated with doubleHead on diagonals & horizontals) ---
+		const CONNECTIONS = [
+			// top row
+			{ from:'school-system',        fromSide:'bottom', to:'professional-learning',   toSide:'top' },
+
+			// split from PL (smart from)
+			{ from:'professional-learning', fromSide:'bottom', to:'instructional-practice', toSide:'top', smartFrom:'towardTarget' },
+			{ from:'professional-learning', fromSide:'bottom', to:'teacher-belief',         toSide:'top', smartFrom:'towardTarget' },
+
+			// middle -> outcomes (straight down, smart origin)
+			{ from:'instructional-practice', fromSide:'bottom', to:'student-social-outcomes',   toSide:'top', smartFrom:'towardTarget' },
+			{ from:'teacher-belief',         fromSide:'bottom', to:'student-academic-outcomes', toSide:'top', smartFrom:'towardTarget' },
+
+			// cross diagonals: corner-to-corner, double-headed
+			{ from:'instructional-practice', to:'student-academic-outcomes', route:'cornerAuto', doubleHead:true },
+			{ from:'teacher-belief',         to:'student-social-outcomes',    route:'cornerAuto', doubleHead:true },
+
+			// horizontals: double-headed
+			{ from:'instructional-practice',  fromSide:'right', to:'teacher-belief',            toSide:'left', doubleHead:true },
+			{ from:'student-social-outcomes', fromSide:'right', to:'student-academic-outcomes', toSide:'left', doubleHead:true },
+		];
+
+		// ---- helpers ----
+		function byKey(key) {
+			return document.querySelector(`[data-box="${key}"]`);
+		}
+		function rects(container, el) {
+			const c = container.getBoundingClientRect();
+			const r = el.getBoundingClientRect();
+			return { c, r };
+		}
+		function centerOf(el, container) {
+			const { c, r } = rects(container, el);
+			return { x: r.left + r.width/2 - c.left, y: r.top + r.height/2 - c.top };
+		}
+		function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
+
+		// Mid-edge anchor (with optional smart-from)
+		function edgeAnchor(el, side, container, options = {}) {
+			const inset = options.inset ?? 10;
+			const { c, r } = rects(container, el);
+			const left   = r.left - c.left;
+			const right  = r.right - c.left;
+			const top    = r.top - c.top;
+			const bottom = r.bottom - c.top;
+
+			let x = (left + right) / 2;
+			let y = (top + bottom) / 2;
+
+			if (options.towardEl) {
+				const t = centerOf(options.towardEl, container);
+				if (side === 'top' || side === 'bottom') {
+					x = clamp(t.x, left + inset, right - inset);
+				} else {
+					y = clamp(t.y, top + inset, bottom - inset);
+				}
+			}
+
+			if (side === 'top')    return { x, y: top    };
+			if (side === 'bottom') return { x, y: bottom };
+			if (side === 'left')   return { x: left,  y };
+			return { x: right, y }; // 'right'
+		}
+
+		// Exact corner point (on the edge)
+		function exactCorner(el, corner, container) {
+			const { c, r } = rects(container, el);
+			const left   = r.left - c.left;
+			const right  = r.right - c.left;
+			const top    = r.top - c.top;
+			const bottom = r.bottom - c.top;
+
+			switch (corner) {
+				case 'top-left':     return { x: left,  y: top };
+				case 'top-right':    return { x: right, y: top };
+				case 'bottom-left':  return { x: left,  y: bottom };
+				case 'bottom-right': return { x: right, y: bottom };
+				default:             return { x: (left+right)/2, y: (top+bottom)/2 };
+			}
+		}
+
+		// Corner point nudged OUTSIDE the box (so the line doesn't pass under)
+		function outwardCorner(el, corner, container, pad = 6) {
+			const p = exactCorner(el, corner, container);
+			// push outwards depending on corner
+			if (corner === 'top-left')     return { x: p.x - pad, y: p.y - pad };
+			if (corner === 'top-right')    return { x: p.x + pad, y: p.y - pad };
+			if (corner === 'bottom-left')  return { x: p.x - pad, y: p.y + pad };
+			if (corner === 'bottom-right') return { x: p.x + pad, y: p.y + pad };
+			return p;
+		}
+
+		// Pick nearest corners based on relative positions (from center -> to center)
+		function pickCornerPair(fromEl, toEl) {
+			const f = centerOf(fromEl, container);
+			const t = centerOf(toEl,   container);
+			const dx = t.x - f.x;
+			const dy = t.y - f.y;
+
+			if (dx >= 0 && dy >= 0) return ['bottom-right', 'top-left'];
+			if (dx <  0 && dy >= 0) return ['bottom-left',  'top-right'];
+			if (dx >= 0 && dy <  0) return ['top-right',    'bottom-left'];
+			return ['top-left', 'bottom-right'];
+		}
+
+		function clearSvg() {
+			while (svg.firstChild) svg.removeChild(svg.firstChild);
+		}
+
+		// Create arrowhead once; use auto-start-reverse so we can draw double-headed
+		function ensureMarkers(color = '#F4A300') {
+			if (svg.querySelector('#arrowhead')) return;
+			const defs = svg.querySelector('defs') || svg.insertBefore(document.createElementNS('http://www.w3.org/2000/svg','defs'), svg.firstChild);
+			const marker = document.createElementNS('http://www.w3.org/2000/svg','marker');
+			marker.setAttribute('id', 'arrowhead');
+			marker.setAttribute('markerWidth', '10');
+			marker.setAttribute('markerHeight', '10');
+			marker.setAttribute('refX', '8');  // tip at x=8
+			marker.setAttribute('refY', '3.5');
+			marker.setAttribute('orient', 'auto-start-reverse');
+			// Optional: scale with stroke width (keeps appearance consistent)
+			marker.setAttribute('markerUnits', 'strokeWidth');
+			const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+			path.setAttribute('d','M0,0 L8,3.5 L0,7 Z');
+			path.setAttribute('fill', color);
+			marker.appendChild(path);
+			defs.appendChild(marker);
+		}
+
+		// Optionally shorten line ends so arrowheads touch edges precisely (avoid overshoot)
+		function shortenEnds(p1, p2, shortenStart = 0, shortenEnd = 0) {
+			const dx = p2.x - p1.x, dy = p2.y - p1.y;
+			const len = Math.hypot(dx, dy) || 1;
+			const ux = dx / len, uy = dy / len;
+			return {
+				x1: p1.x + ux * shortenStart,
+				y1: p1.y + uy * shortenStart,
+				x2: p2.x - ux * shortenEnd,
+				y2: p2.y - uy * shortenEnd
+			};
+		}
+
+		function drawLine(p1, p2, { color = '#F4A300', width = 1, doubleHead = false, tighten = 0 } = {}) {
+			ensureMarkers(color);
+
+			// Tighten pulls back the endpoints a bit so the marker tip sits right on the corner/edge
+			const s = shortenEnds(p1, p2, doubleHead ? tighten : 0, tighten);
+
+			const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+			line.setAttribute('x1', s.x1);
+			line.setAttribute('y1', s.y1);
+			line.setAttribute('x2', s.x2);
+			line.setAttribute('y2', s.y2);
+			line.setAttribute('stroke', color);
+			line.setAttribute('stroke-width', width);
+			line.setAttribute('shape-rendering','geometricPrecision');
+			line.setAttribute('marker-end','url(#arrowhead)');
+			if (doubleHead) line.setAttribute('marker-start','url(#arrowhead)');
+			svg.appendChild(line);
+		}
+
+		function updateArrows() {
+			clearSvg();
+			const rect = container.getBoundingClientRect();
+			svg.setAttribute('viewBox', `0 0 ${rect.width} ${rect.height}`);
+			svg.setAttribute('width', rect.width);
+			svg.setAttribute('height', rect.height);
+
+			for (const conn of CONNECTIONS) {
+				const fromEl = byKey(conn.from);
+				const toEl   = byKey(conn.to);
+				if (!fromEl || !toEl) continue;
+
+				let p1, p2;
+
+				if (conn.route === 'cornerAuto') {
+					const [fromCorner, toCorner] = pickCornerPair(fromEl, toEl);
+					// start slightly OUTSIDE source corner, end EXACTLY on target corner
+					p1 = outwardCorner(fromEl, fromCorner, container, 8);
+					p2 = exactCorner(toEl,     toCorner,  container);
+					drawLine(p1, p2, { doubleHead: !!conn.doubleHead, tighten: 6 }); // tighten ~6px so tips sit right at corners
+				} else {
+					const fromOpts = (conn.smartFrom === 'towardTarget') ? { towardEl: toEl, inset: 14 } : undefined;
+					const fromSide = conn.fromSide ?? 'bottom';
+					const toSide   = conn.toSide   ?? 'top';
+					p1 = edgeAnchor(fromEl, fromSide, container, fromOpts);
+					p2 = edgeAnchor(toEl,   toSide,   container);
+
+					// For double-headed straight lines, pull back both ends a little
+					drawLine(p1, p2, { doubleHead: !!conn.doubleHead, tighten: conn.doubleHead ? 6 : 4 });
+				}
+			}
+		}
+
+		window.addEventListener('load',   updateArrows);
+		window.addEventListener('resize', updateArrows);
+		setTimeout(updateArrows, 300);
+	})();
+	
+	/*
+	async function showLoggedInUser() {
+		const el = document.getElementById('loginBanner');
+		if (!el) return;
+		try {
+			const r = await fetch('/username', { credentials: 'include' });
+			if (!r.ok) return;
+			const name = (await r.text()).trim();
+			if (!name) return;
+			el.textContent = `Logged in as ${name}`;
+			el.style.display = 'block';
+		} catch (e) {  }
+	}
+	*/
+	
+	/*
+	document.addEventListener('DOMContentLoaded', async () => {
+		const user = await getCurrentUsername();
+		window.__CURRENT_USER = user;
+		const el = document.getElementById('loginBanner');
+		if (el) {
+			el.textContent = `Logged in as ${user || 'unknown user'}`;
+			el.style.display = 'block';
+		}
+	});
+	*/
+	/*
+	document.addEventListener('DOMContentLoaded', async () => {
+		const user = await getCurrentUsername();
+		window.__CURRENT_USER = user;
+
+		// Hard-coded map of usernames → dataset labels
+		const DATASET_LABELS = {
+			'neithan': 'IP',
+			'n3ith4n': 'LE',
+			'jcasano': 'ANet',
+			'ahusain8': 'UBE',
+			'lmilam1': 'UBE',
+			'ekelly17': 'TNTP',
+			'mwinte11': 'LE',
+			'sworthma': 'TL',
+			'jsims5': 'IP',
+			'amaus': 'ANet',
+			'Psunda10': "UBE",
+			'abogusl2': "LE"
+			// …add as needed
+		};
+
+		let label = '';
+		if (user) {
+			const key = user.toLowerCase().trim();
+			if (DATASET_LABELS[key]) {
+				label = ` (${DATASET_LABELS[key]})`;
+			}
+		}
+
+		const el = document.getElementById('loginBanner');
+		if (el) {
+			el.textContent = `Logged in as ${user || 'unknown user'}${label}`;
+			el.style.display = 'block';
+		}
+	});
+
+
+
+	document.addEventListener('DOMContentLoaded', showLoggedInUser);
+	*/
+	
+  document.addEventListener('DOMContentLoaded', async () => {
+    
+    const org = await window.resolveCurrentOrgId();  // <- this triggers the modal if needed
+
+    // @RPPLTeam: If you need to do anything AFTER login/org is known, do it here:
+    console.log('Resolved org:', org, 'user:', window.__CURRENT_USER);
+
+  });
+
+	
+  document.getElementById('signOut').onclick = () => {
+    localStorage.removeItem('rppl_login');
+    location.reload();
+  };
+	
+	</script>
+
+
+
+
+</body>
+</html>
