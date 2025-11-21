@@ -231,7 +231,7 @@ Again same structure, but optimized for org-vs-global monthly pairings and LOESS
 
 ---
 
-## FAQ: Customizing the Visualizer for New Frameworks
+## 📟 Dev FAQs: Customizing the Visualizer for New Frameworks
 
 ### **Q: I want to add a new construct. What do I edit?**
 **A:** Two files:
@@ -325,9 +325,11 @@ RPPL Insights v2.0 includes four fully modular visualization types. Each one ans
 
 ---
 
-### **1. Radar Chart — Construct Summary View**
+### **1. Org Snapshot Radar Chart**
 
-The radar chart gives a **one-screen snapshot** of how an organization performs across the subconstructs (A/B/C) within a dimension. Each axis corresponds to a survey set defined in `surveySets[]`.
+https://github.com/user-attachments/assets/d44750c4-61ae-4ee2-b6f7-d15f979c4f29
+
+The Org Snapshot Radar Chart gives a **one-screen snapshot** of how an organization performs across the subconstructs (A/B/C) within a dimension. Each axis corresponds to a survey set defined in `surveySets[]`.
 
 **What it shows**
 - The **average score** for your organization on each subconstruct  
@@ -346,7 +348,9 @@ The radar chart gives a **one-screen snapshot** of how an organization performs 
 
 ---
 
-### **2. Overall / Networth Trend Chart — Change Over Time**
+### **2. Trends Over Time Chart**
+
+https://github.com/user-attachments/assets/11ce43f4-1319-4548-bb5d-ccd948fea64e
 
 This chart shows how scores evolve **month-by-month**, letting leaders track change, momentum, and implementation stability.
 
@@ -371,9 +375,11 @@ This chart shows how scores evolve **month-by-month**, letting leaders track cha
 
 ---
 
-### **3. Milestone Chart — Threshold-Based Progress**
+### **3. Progress Towards Goals Chart**
 
-The milestone view answers:
+https://github.com/user-attachments/assets/db435388-3efc-4819-b4d7-3fd4e31534bc
+
+The Progress Towards Goals view answers:
 
 > **“When did we first meet our target?”**
 
@@ -397,6 +403,8 @@ Users define a condition (e.g., `>= 3.4`) and the chart identifies the first mon
 ---
 
 ### **4. Scatterplot — Org vs Global Relationship View**
+
+https://github.com/user-attachments/assets/9a724293-d1c3-4730-8362-e0ace6287d61
 
 The scatterplot shows the relationship between **your organization’s monthly scores** and the **global averages**.
 
@@ -428,6 +436,3 @@ Together, the four views give teams a complete analytical toolkit:
 - **Overall:** How are we changing?  
 - **Milestone:** When did we hit targets?  
 - **Scatter:** How do we compare to others?
-
-
-
