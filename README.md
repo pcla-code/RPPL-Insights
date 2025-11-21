@@ -70,3 +70,248 @@ When launched, the Python server:
 
 This ensures maximum compatibility with Stronghold’s isolation requirements while keeping the visualization fast and fully local.
 
+## 🛠️ Making the Visualizer Work with Frameworks
+
+RPPL Insights is designed so that **framework logic lives in two files**:
+
+- `js/school-system.constructs.js` — *What* the constructs are, how they’re named, and how the UI displays them.
+- `js/school-system.data.js` — *Which data each construct uses* (CSV file, label, color, questions).
+
+Understanding these two files gives you full control to adapt the visualizer to any instructional framework.
+
+---
+
+### `school-system.constructs.js` — Defining Constructs & Subconstructs
+
+This file is the **content map** of the framework. It registers each construct by a stable `id` (e.g., `school-system`, `professional-learning`, `instructional-practice`, etc.) and defines:
+
+- The construct’s dimension, title, and subtitle
+- Subconstruct groups A, B, and optionally C  
+  (with a badge color, badge text, title, and description)
+
+Example structure:
+
+```js
+const CONSTRUCTS = {
+  'school-system': {
+    id: 'school-system',
+    dimension: 'System Conditions',
+    title: 'School & System Conditions',
+    subtitle: 'HQIM implementation is supported by and integrated with existing infrastructure.',
+    groupA: {
+      badgeText: 'A',
+      badgeColor: '#A98FD4',
+      title: 'HQIM Coherence',
+      description: 'Alignment between vision, curriculum, and other systems.'
+    },
+    groupB: {
+      badgeText: 'B',
+      badgeColor: '#4C9AFF',
+      title: 'Foundational Structures',
+      description: 'Time, processes, and routines that support implementation.'
+    }
+    // groupC: {...} if needed
+  }
+};
+```
+
+When a user clicks a box in `index.html`, the app calls:
+
+```js
+setCurrentConstructAndRefresh('school-system');
+```
+
+`visualizer.html` then reads the construct config and automatically updates the headers, subconstruct badges, and radar chart title.
+
+---
+
+### `school-system.data.js` — Wiring Constructs to CSV Data
+
+This file defines a single `DATA_CONFIGS` object that drives **exactly which CSVs** the visualizer loads and **which questions** each chart calculates averages for.
+
+```js
+const DATA_CONFIGS = {
+  'school-system': {
+    radar: { surveySets: [...] },
+    overall: { surveySets: [...] },
+    milestone: { sets: [...] },
+    scatter: { SURVEY_SETS: [...] }
+  },
+
+  'professional-learning': { ... },
+  'instructional-practice': { ... },
+  'teacher-beliefs': { ... }
+};
+```
+
+The four visualizer views are always expressed in one of these schemas:
+
+#### 1. Radar View
+
+```js
+radar: {
+  surveySets: [
+    {
+      label: "(A) HQIM Coherence - Teacher Survey",
+      fileOf: (org) => `orgdata/${org}_teacher_survey.csv`,
+      questions: [
+        "How well does your school leaders' vision for instruction align with your adopted curriculum?"
+      ]
+    },
+    // more...
+  ]
+}
+```
+
+Each `surveySets[]` entry tells the visualizer:
+
+- **label** → text on the radar axis  
+- **fileOf(org)** → which CSV to load  
+- **questions[]** → exact column names to average
+
+#### 2. Overall / Networth (Trends Over Time)
+
+```js
+overall: {
+  surveySets: [
+    {
+      label: '(A) HQIM Coherence - Teacher Survey',
+      color: '#A98FD4',
+      fileOf: (org) => `orgdata/${org}_teacher_survey.csv`,
+      questions: [ "…" ]
+    },
+    // more...
+  ]
+}
+```
+
+This works exactly like radar but adds:
+
+- **color** → controls line colors in the trend chart  
+- Support for global averages depending on `GLOBAL_BASELINE` and the “Include my org in global” toggle
+
+#### 3. Milestone View
+
+```js
+milestone: {
+  sets: [
+    {
+      label: '(A) HQIM Coherence - Teacher Survey',
+      color: '#A98FD4',
+      fileOf: (org)=>`orgdata/${org}_teacher_survey.csv`,
+      questions: [ "…" ]
+    },
+    // more...
+  ]
+}
+```
+
+Formula is the same — `sets[]` instead of `surveySets[]`.
+
+#### 4. Scatter View
+
+```js
+scatter: {
+  SURVEY_SETS: [
+    {
+      label: "(A) HQIM Coherence — Teacher",
+      fileOf: (org)=>`orgdata/${org}_teacher_survey.csv`,
+      questions: [ "…" ]
+    },
+    // more...
+  ]
+}
+```
+
+Again same structure, but optimized for org-vs-global monthly pairings and LOESS smoothing.
+
+---
+
+## FAQ: Customizing the Visualizer for New Frameworks
+
+### **Q: I want to add a new construct. What do I edit?**
+**A:** Two files:
+
+1. `school-system.constructs.js` — add a new construct entry with A/B/C groups  
+2. `school-system.data.js` — add a matching entry inside `DATA_CONFIGS` with radar/overall/milestone/scatter blocks
+
+And make sure your homepage button calls:
+
+```js
+setCurrentConstructAndRefresh('new-construct-id');
+```
+
+---
+
+### **Q: I want to add a question to an existing construct.**
+
+Edit **only** `school-system.data.js`.
+
+Find the correct view:
+
+- `radar.surveySets[x].questions[]`
+- `overall.surveySets[x].questions[]`
+- `milestone.sets[x].questions[]`
+- `scatter.SURVEY_SETS[x].questions[]`
+
+Add your new question text **exactly matching the CSV column header**.
+
+No other files need changes.
+
+---
+
+### **Q: My construct now uses a different CSV source.**
+
+Change the `fileOf(org)` function in `school-system.data.js`.
+
+Example:
+
+```js
+fileOf: (org) => `orgdata/${org}_teacher_survey_2025.csv`
+```
+
+Make sure the CSV exists for each org.
+
+---
+
+### **Q: My new instructional framework doesn’t map neatly into this structure. What can I do?**
+
+You can often reshape your framework into:
+
+```
+construct
+  → radar: surveySets[]
+  → overall: surveySets[]
+  → milestone: sets[]
+  → scatter: SURVEY_SETS[]
+```
+
+Each entry defines:
+
+- A label  
+- A CSV source  
+- A list of questions to aggregate  
+
+If your data **can** be reorganized into:
+
+```
+date, org, Question1, Question2, ...
+```
+
+…then the visualizer will work automatically.
+
+If your framework has more complex structure (multiple levels, logs, coded events), you should:
+
+- Preprocess your raw data into CSV files that fit this schema  
+- OR write a short cleaning script that outputs the appropriate columns  
+
+**As long as your CSVs match:**
+
+```
+fileOf(org) → CSV
+questions[] → exact column names with numeric values
+```
+
+the visualizer will fully support the framework — no chart code modifications required.
+
+
