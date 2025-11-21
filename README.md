@@ -16,24 +16,49 @@ RPPL Insights v2.0 runs entirely on a **local Python server** and serves fully s
 ### Folder Structure (Simplified)
 ```
 RPPL-Insights/
- ├─ pages/
- │   └─ visualizer.html
- ├─ js/
- │   ├─ school-system.index.js
- │   ├─ school-system.radar.js
- │   ├─ school-system.overall.js
- │   ├─ school-system.milestone.js
- │   ├─ school-system.scatter.js
- │   └─ school-system.data.js
- ├─ styles/
- │   └─ visualizer.css
- ├─ orgdata/
- │   └─ (secure CSV files per organization)
- ├─ libraries/
- │   ├─ server.py   ← protected Python server
- │   └─ client.py
- ├─ start_visualizer.bat
- └─ README.md
+├─ assets/                     # Background images, explainer videos
+│  ├─ (various .mp4/.png files)
+│
+├─ config/
+│  └─ usermap.csv              # Maps username → password → org
+│
+├─ js/                         # Main modular JS files (v2.0)
+│  ├─ login.js
+│  ├─ rpplmasterscripts.js
+│  ├─ school-system.constructs.js
+│  ├─ school-system.data.js
+│  ├─ school-system.index.js
+│  ├─ school-system.milestone.js
+│  ├─ school-system.org.js
+│  ├─ school-system.overall.js
+│  ├─ school-system.radar.js
+│  ├─ school-system.scatter.js
+│  └─ school-system.tutorial.js
+│
+├─ legacy/                     # Old non-modularized v1 files (kept for reference)
+│  └─ (archived .js files)
+│
+├─ libraries/                  # Chart.js, Luxon, PapaParse, Python server logic
+│  ├─ chart.js
+│  ├─ chart.umd.js
+│  ├─ chartjs-adapter-luxon@1.js
+│  ├─ luxon.min.js
+│  ├─ papaparse.min.js
+│  ├─ client.py                # Client-side Python helper (Stronghold)
+│  └─ server.py                # Secure Python server (blocks direct CSV access)
+│
+├─ orgdata/                    # Organization CSV files (ELA framework aligned)
+│  └─ (org-specific CSV files placed here)
+│
+├─ styles/
+│  ├─ rpplmasterstyles.css     # Main layout styles
+│  └─ school-system.css        # Visualizer interface + dynamic modal styling
+│
+├─ favicon.ico
+│
+├─ index.html                  # Home page (Dimensions → Constructs menu)
+└─ visualizer.html             # Visualization engine (Radar / Trends / Milestone / Scatter)
+
 ```
 
 ### How It Works
