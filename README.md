@@ -4,6 +4,13 @@ https://github.com/user-attachments/assets/6bd5f097-f204-4130-8265-af0255d593a4
 
 The **RPPL Insights (RPPL Visualizer v2.0)** platform is a fully modular, ELA-aligned data visualization system designed for secure research environments such as Stronghold. This version introduces a construct-driven architecture, modular chart pipelines, stronger local security via a custom Python server, and support for multiple interactive chart types including radar charts, trends-over-time line charts, milestone threshold charts, and scatterplots, all operating on locally stored survey data aligned to the ELA Instructional Framework.
 
+Together, the four views give teams a complete analytical toolkit:
+
+- **Radar (Org Snapshot):** Where are we today?  
+- **Overall (Trends Over Time):** How are we changing?  
+- **Milestone (Progress Towards Goals):** When did we hit targets?  
+- **Scatterplot (Item-Level Relationships):** How do we compare to others?
+
 ## ⚙️ Installation & Requirements
 
 RPPL Insights v2.0 runs entirely on a **local Python server** and serves fully static HTML/CSS/JS files. No internet access or external APIs are required. The system is designed to operate inside restricted research environments (including Stronghold) where data files must never be directly accessible through the browser.
