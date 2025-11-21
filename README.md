@@ -4,20 +4,11 @@ https://github.com/user-attachments/assets/6bd5f097-f204-4130-8265-af0255d593a4
 
 The **RPPL Insights (RPPL Visualizer v2.0)** platform is a fully modular, ELA-aligned data visualization system designed for secure research environments such as Stronghold. This version introduces a construct-driven architecture, modular chart pipelines, stronger local security via a custom Python server, and support for multiple interactive chart types including radar charts, trends-over-time line charts, milestone threshold charts, and scatterplots, all operating on locally stored survey data aligned to the ELA Instructional Framework.
 
-Together, the four views give teams a complete analytical toolkit:
-
-- ![Radar](https://img.shields.io/badge/Radar-Org%20Snapshot-0E9F94?style=for-the-badge)  
-  **Where are we today?**
-
-- ![Overall](https://img.shields.io/badge/Overall-Trends%20Over%20Time-4C9AFF?style=for-the-badge)  
-  **How are we changing?**
-
-- ![Milestone](https://img.shields.io/badge/Milestone-Progress%20Towards%20Goals-A98FD4?style=for-the-badge)  
-  **When did we hit targets?**
-
-- ![Scatterplot](https://img.shields.io/badge/Scatterplot-Item--Level%20Relationships-9966FF?style=for-the-badge)  
-  **How do we compare to others?**
-
+Together, the four views give teams a complete analytical toolkit: 
+- **Radar (Org Snapshot):** Where are we today?
+- **Overall (Trends Over Time):** How are we changing?
+- **Milestone (Progress Towards Goals):** When did we hit targets?
+- **Scatterplot (Item-Level Relationships):** How do we compare to others?
 
 ## ⚙️ Installation & Requirements
 
