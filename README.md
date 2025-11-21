@@ -83,6 +83,8 @@ Understanding these two files gives you full control to adapt the visualizer to 
 
 ### `school-system.constructs.js` — Defining Constructs & Subconstructs
 
+<img width="1911" height="972" alt="constructsMapper" src="https://github.com/user-attachments/assets/f8106e5c-0a15-4298-b59e-422649b6d9eb" />
+
 This file is the **content map** of the framework. It registers each construct by a stable `id` (e.g., `school-system`, `professional-learning`, `instructional-practice`, etc.) and defines:
 
 - The construct’s dimension, title, and subtitle
@@ -126,6 +128,8 @@ setCurrentConstructAndRefresh('school-system');
 ---
 
 ### `school-system.data.js` — Wiring Constructs to CSV Data
+
+<img width="1911" height="949" alt="orgFilesAndQuestionsMapping" src="https://github.com/user-attachments/assets/d2405f7b-a4db-44e1-8ae9-5f4a0fe45db6" />
 
 This file defines a single `DATA_CONFIGS` object that drives **exactly which CSVs** the visualizer loads and **which questions** each chart calculates averages for.
 
