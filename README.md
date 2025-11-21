@@ -452,3 +452,25 @@ Together, the four views give teams a complete analytical toolkit:
 - **Overall (Trends Over Time):** How are we changing?  
 - **Milestone (Progress Towards Goals):** When did we hit targets?  
 - **Scatterplot (Item-Level Relationships):** How do we compare to others?
+
+## 📬 Contact & Support
+
+For questions, suggestions, or requests for framework integration,
+please reach out to the RPPL team or your project lead.
+
+If you encounter issues running the Visualizer inside Stronghold
+or need help preparing CSVs for your framework, we’re happy to help.
+
+
+## 🔒 Security Notes
+
+RPPL Insights v2.0 is built for secure, offline environments.
+All CSV data is kept locally inside `orgdata/`, never transmitted,
+and fully protected by a custom Python server that blocks direct access.
+
+For any deployment involving real student or teacher data,
+ensure machines remain within the approved research environment
+and follow all relevant data governance policies.
+
+## 📎 License
+This project is licensed for internal use within RPPL and Brown University’s Stronghold environment.
