@@ -319,3 +319,115 @@ questions[] → exact column names with numeric values
 the visualizer will fully support the framework — no chart code modifications required.
 
 
+## 📊 Interactive Graph Types in RPPL Insights
+
+RPPL Insights v2.0 includes four fully modular visualization types. Each one answers a different kind of instructional question and pulls data dynamically from the framework definitions in `school-system.data.js`. Below is an overview of what each chart shows, what users can do with it, and how it supports instructional insight-making.
+
+---
+
+### **1. Radar Chart — Construct Summary View**
+
+The radar chart gives a **one-screen snapshot** of how an organization performs across the subconstructs (A/B/C) within a dimension. Each axis corresponds to a survey set defined in `surveySets[]`.
+
+**What it shows**
+- The **average score** for your organization on each subconstruct  
+- The **global average** across all other organizations  
+- A visual comparison of strengths and areas for improvement  
+
+**What users can do**
+- Hover for exact values  
+- Toggle subconstruct groups (A, B, C)  
+- Use dynamic radar titles (pulled from constructs.js)  
+
+**When to use it**
+- Start-of-session overview  
+- Quick comparative diagnostic  
+- Presenting construct summaries in meetings or reports  
+
+---
+
+### **2. Overall / Networth Trend Chart — Change Over Time**
+
+This chart shows how scores evolve **month-by-month**, letting leaders track change, momentum, and implementation stability.
+
+**What it shows**
+- Line for **Your Org**  
+- Line for **Global Average**  
+- Distinct dash patterns per subconstruct  
+- Optional “Net Difference” mode (Your Org minus Global Average)  
+
+**What users can do**
+- Switch chart modes using **Chart Mode**:  
+  - `lines` (simple timeline)  
+  - `net` (difference timeline)  
+- Toggle subconstruct groups A/B/C  
+- Enable/disable **“Include my org in global average”**  
+- Access detailed tooltips including per-question breakdowns  
+
+**When to use it**
+- Monitoring implementation trends  
+- Presenting progress across the school year  
+- Comparing trajectory across subconstructs  
+
+---
+
+### **3. Milestone Chart — Threshold-Based Progress**
+
+The milestone view answers:
+
+> **“When did we first meet our target?”**
+
+Users define a condition (e.g., `>= 3.4`) and the chart identifies the first month when that threshold is met for each survey set.
+
+**What it shows**
+- First month each group meets the threshold  
+- Color coding per subconstruct  
+- Month filtering and dynamic recalculation  
+
+**What users can do**
+- Enter milestone thresholds using `<`, `>`, `<=`, `>=`  
+- Pick which survey set to analyze  
+- Use the milestone month slider to refine the view  
+
+**When to use it**
+- Accountability metrics  
+- Reporting district progress goals  
+- Tracking improvement over time  
+
+---
+
+### **4. Scatterplot — Org vs Global Relationship View**
+
+The scatterplot shows the relationship between **your organization’s monthly scores** and the **global averages**.
+
+Each point represents a month.  
+X = Your Org  
+Y = Global Average  
+A diagonal identity line marks parity.
+
+**What it shows**
+- How your org compares to global peers  
+- Whether scores trend above, below, or around parity  
+- Jittered points when multiple questions are selected  
+
+**What users can do**
+- Select which survey sets to plot  
+- Highlight specific groups  
+- Explore outlier months or divergence patterns  
+
+**When to use it**
+- Comparing your org’s performance to global trends  
+- Identifying unusually strong or weak months  
+- Understanding subconstruct alignment  
+
+---
+
+Together, the four views give teams a complete analytical toolkit:
+
+- **Radar:** Where are we today?  
+- **Overall:** How are we changing?  
+- **Milestone:** When did we hit targets?  
+- **Scatter:** How do we compare to others?
+
+
+
