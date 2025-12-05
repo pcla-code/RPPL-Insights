@@ -629,6 +629,7 @@ Example helper:
 function normalizeDate(value, inputFormat) {
   // ...split, reorder, and return DD/MM/YYYY
 }
+```
 
 ### c. Question Mapping List
 
