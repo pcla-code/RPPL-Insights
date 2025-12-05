@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RPPL Insights – Data Converter</title>
+  <link rel="stylesheet" href="../styles/rpplmasterstyles.css">
+  <link rel="stylesheet" href="converter.css">
+  <script src="../libraries/papaparse.min.js"></script>
+	<script src="../libraries/xlsx.full.min.js"></script>
+  <script src="converter.js" defer></script>
+</head>
+<body>
+
+  <!-- Reuse main header styling -->
+  <header class="site-header">
+    <div class="header-content">
+      <h1 style="margin-left: 30px">RPPL Insights – Converter</h1>
+      <span style="margin-left: 30px" class="header-date">Build: v.1.11.21.b.Dec.2025</span>
+      <div id="loginBanner" class="login-banner" aria-live="polite">
+        Converter workspace (local only – files never leave this machine)
+      </div>
+    </div>
+  </header>
+
+	<div class="converter-scroll-wrapper">
+
+		<!-- PANEL 1 — UPLOAD -->
+		<section class="conv-panel wide-panel panel-upload">
+			<div class="conv-panel-header">
+				<h2>1. Upload Source File</h2>
+				<p class="conv-subtitle">
+					Upload a CSV/XLS/XLSX file exported from Excel, Qualtrics, or Google Forms.
+				</p>
+			</div>
+
+			<div class="conv-upload-row">
+				<input type="file" id="fileInput" accept=".csv,.xlsx,.xls">
+				<span id="fileStatus" class="conv-file-status">No file loaded.</span>
+			</div>
+
+			<div class="conv-table-wrapper">
+				<table id="sourceTable" class="conv-table"></table>
+				<div id="sourceTablePlaceholder" class="conv-placeholder">
+					Upload a file to see the raw data here.<br>Click column headers to select questions.
+				</div>
+			</div>
+		</section>
+
+		<!-- PANEL 2 — MAPPING + GENERATE PREVIEW -->
+		<section class="conv-panel wide-panel panel-map">
+			<div class="conv-panel-header">
+				<h2>2. Map to Framework</h2>
+			</div>
+
+			<div class="conv-form">
+				<label class="conv-field">
+					<span class="conv-label">Target Org ID</span>
+					<input type="text" id="orgIdInput" placeholder="e.g., org1">
+				</label>
+				
+				<!--
+				<label class="conv-field">
+					<span class="conv-label">Target Output File Name</span>
+					<input type="text" id="targetFileName" placeholder="e.g., teacher_survey">
+				</label>
+				-->
+				
+				<label class="conv-field">
+					<span class="conv-label">Target Output File Name</span>
+
+					<div class="filename-wrapper">
+						<span id="filenamePrefix" class="filename-fixed"></span>
+						<input type="text" id="filenameMiddle" placeholder="teacher_survey" />
+						<span id="filenameSuffix" class="filename-fixed">.csv</span>
+					</div>
+
+					<small class="conv-help">
+						Final filename: <code id="finalFilenameDisplay"></code>
+					</small>
+				</label>
+
+
+				<label class="conv-field">
+					<span class="conv-label">Date Column</span>
+					<select id="dateColumnSelect"></select>
+				</label>
+
+				<label class="conv-field">
+					<span class="conv-label">Input Date Format</span>
+					<select id="dateFormatSelect">
+						<option value="mdy">MM/DD/YYYY</option>
+						<option value="dmy">DD/MM/YYYY</option>
+					</select>
+				</label>
+
+				<label class="conv-field">
+					<span class="conv-label">Selected Question Columns</span>
+					<div id="columnMappings" class="conv-mapping-list"></div>
+				</label>
+
+				<button id="generatePreviewBtn" class="conv-btn primary">3. Generate Preview</button>
+			</div>
+		</section>
+
+		<!-- PANEL 3 — PREVIEW + DOWNLOAD -->
+		<section class="conv-panel wide-panel panel-preview">
+			<div class="conv-panel-header">
+				<h2>4. Preview & Download</h2>
+			</div>
+
+			<div class="conv-preview-wrapper">
+				<table id="previewTable" class="conv-table"></table>
+				<div id="previewPlaceholder" class="conv-placeholder">
+					Generate a preview to see the converted dataset here.
+				</div>
+			</div>
+
+			<div class="conv-actions">
+				<button id="downloadCsvBtn" class="conv-btn secondary" disabled>
+					Download Converted CSV
+				</button>
+
+				<button id="addToQueueBtn" class="conv-btn primary" disabled>
+					Add to Conversion Queue
+				</button>
+			</div>
+		</section>
+
+		<!-- PANEL 4 — QUEUE -->
+		<section class="conv-panel wide-panel panel-queue">
+			<div class="conv-panel-header">
+				<h2>5. Conversion Queue</h2>
+			</div>
+
+			<div id="queueContainer" class="conv-queue-wrapper"></div>
+
+			<button id="convertAllBtn" class="conv-btn primary" style="margin-top:16px;">
+				Convert All
+			</button>
+		</section>
+
+	</div>
+
+
+  <footer class="site-footer">
+    RPPL Insights © RPPL 2025
+  </footer>
+
+</body>
+</html>
