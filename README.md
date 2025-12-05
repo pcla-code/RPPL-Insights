@@ -1,4 +1,4 @@
-# RPPL Insights (RPPL Visualizer v2.0)
+# RPPL Insights (RPPL Visualizer & Converter v2.0)
 
 [![Chart.js](https://badgen.net/badge/Chart.js/4.4.0/blue)](https://www.chartjs.org/)
 [![Luxon](https://badgen.net/badge/Luxon/3.4.4/purple)](https://moment.github.io/luxon/)
@@ -453,6 +453,33 @@ Together, the four views give teams a complete analytical toolkit:
 - **Overall (Trends Over Time):** How are we changing?  
 - **Milestone (Progress Towards Goals):** When did we hit targets?  
 - **Scatterplot (Item-Level Relationships):** How do we compare to others?
+
+## 🧰 RPPL Data Converter (CSV/XLS/XLSX Normalizer)
+
+[![PapaParse](https://badgen.net/badge/PapaParse/5.4.1/green)](https://www.papaparse.com/)
+[![SheetJS](https://badgen.net/badge/SheetJS/xlsx.full.min.js/orange)](https://sheetjs.com/)
+[![File System Access API](https://badgen.net/badge/Web%20API/File%20System%20Access/gray)](https://developer.mozilla.org/en-US/docs/Web/API/File_System_Access_API)
+
+The **RPPL Data Converter** is a local-only, browser-based tool that takes *messy*, org-specific source files (CSV / XLS / XLSX) and converts them into **clean, Visualizer-ready CSVs** with:
+
+- Consistent **date format** (`DD/MM/YYYY`)
+- Standardized **Likert / numeric values**
+- Framework-aligned **question text headers**
+- One **output file per org** that the Visualizer can read directly
+
+It is intentionally **non-hard-coded**: as long as a file has a date column and question columns with numeric or Likert responses, the converter can reshape it to match whatever question labels you’ve defined in `school-system.data.js`. This lets different organizations (with different export formats) all end up with the same normalized schema.
+
+---
+
+### 📁 Converter Files & Location
+
+```text
+RPPL-Insights/
+├─ converter/
+│  ├─ converter.html            # Converter UI (can be renamed index.html if preferred)
+│  ├─ converter.css             # Layout & theming
+│  └─ converter.js              # All converter logic (parsing, mapping, queue, export)
+```
 
 ## 📬 Contact & Support
 
