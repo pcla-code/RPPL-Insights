@@ -456,6 +456,8 @@ Together, the four views give teams a complete analytical toolkit:
 
 ## 🧰 RPPL Data Converter (CSV/XLS/XLSX Normalizer)
 
+https://github.com/user-attachments/assets/2f1ca592-2e76-43c8-8132-5e36a58bf301
+
 [![PapaParse](https://badgen.net/badge/PapaParse/5.4.1/green)](https://www.papaparse.com/)
 [![SheetJS](https://badgen.net/badge/SheetJS/xlsx.full.min.js/orange)](https://sheetjs.com/)
 [![File System Access API](https://badgen.net/badge/Web%20API/File%20System%20Access/gray)](https://developer.mozilla.org/en-US/docs/Web/API/File_System_Access_API)
@@ -512,7 +514,11 @@ The entire workspace scrolls horizontally so each panel has comfortable width an
 
 ---
 
+
+
+
 ### 1️⃣ Panel: Upload Source File
+<img width="903" height="750" alt="image" src="https://github.com/user-attachments/assets/acd52b18-5d5c-4717-a57b-92adea247f29" />
 
 **Goal:** Load and inspect raw data from CSV/XLS/XLSX.
 
@@ -563,6 +569,141 @@ if (ext === 'csv') {
 renderSourceTable();
 populateDateSelect();
 updateColumnMappingsUI();
+```
+
+
+
+
+### 2️⃣ Panel: Map to Framework
+<img width="426" height="749" alt="image" src="https://github.com/user-attachments/assets/7a9a5a0e-9dee-453e-9ac6-82848d87b2db" />
+
+**Goal:** Say which org this file belongs to, how the final filename should look, which date column to use, and how to label each question.
+
+---
+
+### a. Target Org ID + Filename Builder
+
+- **Target Org ID input** (e.g., `org1`, `org2`, `districtA`)
+- **Filename input with live prefix/suffix lock**
+
+When you type `org1` in the Org ID box:
+
+`org1_<your_file_name>.csv`
+
+- Only the **middle part** (the editable filename) can be typed.
+- The **prefix (`org1_`)** and **suffix (`.csv`)** are locked/controlled by the tool.
+
+**Example:**
+
+- Target Org ID: `org1`  
+- Output filename display: `org1_teacher_survey_may.csv`
+
+The computed **final filename** is stored internally and used by:
+
+- **Download CSV**
+- **Conversion Queue**
+
+---
+
+### b. Date Column & Input Format
+
+#### Date Column select
+
+- A dropdown of all headers.  
+- The selected header becomes the `date` column in the output file.
+
+#### Input Date Format select
+
+- `MM/DD/YYYY (mdy)`
+- `DD/MM/YYYY (dmy)`
+
+The converter normalizes all dates to:
+
+`DD/MM/YYYY`
+
+Used by the Visualizer.
+
+Example helper:
+
+```js
+function normalizeDate(value, inputFormat) {
+  // ...split, reorder, and return DD/MM/YYYY
+}
+
+### c. Question Mapping List
+
+Shows every selected column (except the chosen date column).
+
+For each mapping entry:
+
+- `Source column: [original header]`
+- `[ Input box: "Framework-aligned question text" ]`
+
+You can:
+
+- Keep the original column header, **or**
+- Type the exact question wording used in `school-system.data.js`.
+
+This allows widely different exports (Qualtrics, Google Forms, SIS exports, etc.) to be renamed into a single canonical question set that the Visualizer understands.
+
+### 3️⃣ Panel: Preview & Download
+<img width="896" height="746" alt="image" src="https://github.com/user-attachments/assets/a4989c84-9d5f-4572-94c3-25cb7ff47185" />
+
+
+**Goal:** Show exactly what the final converted CSV will look like.
+
+Triggered by:
+
+- **Generate Preview**
+
+The converter validates:
+
+- A file is loaded  
+- Org ID is set  
+- Filename middle is non-empty  
+- At least one question column is mapped  
+
+Then it builds a normalized dataset:
+
+- Dates → always `DD/MM/YYYY`
+- Likert text → numeric (`1–5`)
+- Numeric values preserved
+- Output stored in `previewData`
+
+The preview table:
+
+- Displays normalized headers + rows  
+- Read-only  
+- Uses dashed borders + thin accent scrollbars  
+
+Actions:
+
+- **Download Converted CSV**  
+  Exports using:  
+  `orgId_<filename>.csv`
+
+- **Add to Conversion Queue**  
+  Stores `previewData` under the selected org for batch export.
+
+### 4️⃣ Panel: Conversion Queue
+<img width="398" height="522" alt="image" src="https://github.com/user-attachments/assets/82f05c1b-04c5-49e2-b6fe-ae0fac490042" />
+
+**Goal:** Batch-export multiple converted files for one or many orgs.
+
+Displayed as a tree:
+
+- Each **org** becomes a parent folder  
+- Each **converted CSV** appears as a child item  
+
+Features:
+
+- **Click to preview** any queued file (loads it back into Preview panel)
+- **Remove** an org or individual file (each has a small ✕)
+- **Convert All**:
+  - Prompts for a destination folder
+  - Creates subfolders per org
+  - Writes each queued CSV using its final filename
+  - Can be run repeatedly (queue is not cleared automatically)
 
 ## 📬 Contact & Support
 
