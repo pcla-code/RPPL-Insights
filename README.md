@@ -481,6 +481,89 @@ RPPL-Insights/
 │  └─ converter.js              # All converter logic (parsing, mapping, queue, export)
 ```
 
+## 🧱 High-Level Workflow
+
+1. **Upload** a source file (CSV/XLS/XLSX).
+2. **Select** which rows & columns to keep and how each question should be labeled.
+3. **Generate a preview** of the converted dataset.
+4. **Download** a single CSV or **add it to a conversion queue**.
+5. Use **Convert All** to batch-export multiple org files into folders, ready for `orgdata/`.
+
+The converter does **not** need to know anything about constructs/groups; it only needs:
+
+- A **date** column  
+- A set of **question columns**  
+- The **final question labels** you want those columns to become  
+
+The Visualizer then handles which constructs/subconstructs those labels belong to.
+
+---
+
+## 🧩 Panels & Features
+
+The Data Converter UI is organized into four horizontal panels:
+
+1. **Upload Source File**
+2. **Map to Framework**
+3. **Preview & Download**
+4. **Conversion Queue**
+
+The entire workspace scrolls horizontally so each panel has comfortable width and breathing room.
+
+---
+
+### 1️⃣ Panel: Upload Source File
+
+**Goal:** Load and inspect raw data from CSV/XLS/XLSX.
+
+#### Supported formats
+
+- `.csv` via **PapaParse**
+- `.xlsx` / `.xls` via **SheetJS** (`xlsx.full.min.js`)
+
+#### Key features
+
+- **Modern upload control**  
+  A clean “Choose file” picker with inline status  
+  *(e.g., `myfile.xlsx loaded. 532 rows detected.`)*
+
+- **Live table preview with horizontal + vertical scroll**
+  - Displays headers and up to N rows (configurable)
+  - Thin custom scrollbars with RPPL accent colors
+  - Sticky header row
+
+- **Row exclusion control**
+  - Each row has a checkbox in the first column
+  - Uncheck rows to **exclude** them from the conversion pipeline
+  - Excluded rows never appear in the preview or exports
+
+- **Editable cells**
+  - Double-click any cell to edit its value in place
+  - Edits are persisted into `sourceRows` and flow through to preview / export
+  - Useful for fixing typos, cleaning weird values, or correcting dates
+
+- **Column selection (for questions)**
+  - Click any header to toggle selection for that column
+  - Selected columns are highlighted (header + all cells) with a darker accent background
+  - Selected question columns drive what appears in the mapping panel
+
+#### Under the hood (simplified)
+
+```js
+// On file input change:
+if (ext === 'csv') {
+  Papa.parse(file, { header: true, /* ... */ });
+} else if (ext === 'xlsx' || ext === 'xls') {
+  const data = await file.arrayBuffer();
+  const workbook = XLSX.read(data, { type: 'array' });
+  const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+  sourceRows = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
+}
+
+renderSourceTable();
+populateDateSelect();
+updateColumnMappingsUI();
+
 ## 📬 Contact & Support
 
 For questions, suggestions, or requests for framework integration,
