@@ -7,13 +7,13 @@
 
 https://github.com/user-attachments/assets/6bd5f097-f204-4130-8265-af0255d593a4
 
-The **RPPL Insights (RPPL Visualizer v2.0)** platform is a fully modular, ELA-aligned data visualization system designed for secure research environments such as Stronghold. This version introduces a construct-driven architecture, modular chart pipelines, stronger local security via a custom Python server, and support for multiple interactive chart types including radar charts, trends-over-time line charts, milestone threshold charts, and scatterplots, all operating on locally stored survey data aligned to the ELA Instructional Framework.
+The **RPPL Insights (RPPL Visualizer v2.0)** platform is a fully modular, ELA Shared Measures-aligned data visualization system designed for secure research environments such as Stronghold. This version introduces a construct-driven architecture, modular chart pipelines, stronger local security via a custom Python server, and support for multiple interactive chart types including radar charts, trends-over-time line charts, milestone threshold charts, and scatterplots, all operating on locally stored survey data aligned to the first version of the ELA Shared Measures Toolkit.
 
-Together, the four views give teams a complete analytical toolkit: 
+Together, the four views give teams a complete understanding of their CBPL and HQIM implementation:
 
 - **Radar (Org Snapshot):** Where are we today?
 - **Overall (Trends Over Time):** How are we changing?
-- **Milestone (Progress Towards Goals):** When did we hit targets?
+- **Milestone (Progress Towards Goals):** Did we accomplish our goals?
 - **Scatterplot (Item-Level Relationships):** How do we compare to others?
 
 [![Radar – Org Snapshot](https://badgen.net/badge/View/Radar%20-%20Org%20Snapshot/purple)](#1-org-snapshot-radar-chart)
@@ -447,11 +447,11 @@ A diagonal identity line marks parity.
 
 ---
 
-Together, the four views give teams a complete analytical toolkit:
+Together, the four views give teams a complete understanding of their CBPL and HQIM implementation:
 
 - **Radar (Org Snapshot):** Where are we today?  
 - **Overall (Trends Over Time):** How are we changing?  
-- **Milestone (Progress Towards Goals):** When did we hit targets?  
+- **Milestone (Progress Towards Goals):** Did we accomplish our goals? 
 - **Scatterplot (Item-Level Relationships):** How do we compare to others?
 
 ## 🧰 RPPL Data Converter (CSV/XLS/XLSX Normalizer)
