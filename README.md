@@ -21,7 +21,7 @@ Together, the four views give teams a complete understanding of their CBPL and H
 [![Milestone – Goal Tracking](https://badgen.net/badge/View/Progress%20Towards%20Goals/green)](#3-progress-towards-goals-chart)
 [![Scatterplot – Item Relationships](https://badgen.net/badge/View/Item%20Level%20Relationships/orange)](#4-scatterplot--org-vs-global-relationship-view)
 
-## Using the tool
+## 🚀 Using the tool
 
 ### Step 1) Decide who can access which org data (the **usermap**)
 1. Open the usermap file at `config/usermap` (this is essentially your “permissions list”).
@@ -33,6 +33,7 @@ Together, the four views give teams a complete understanding of their CBPL and H
 
 **What the usermap does (in plain terms):**  
 It tells the Visualizer: *“When this person logs in, which org dataset(s) are they allowed to see?”*
+note that the data inside orgdata folder have prefixes i.e. **org1**_teachersurvey.csv this is essentially the org that you allow a user to see when you add `Neithan,org5,v9D2Q` <- This one for instance means user Neithan will be shown the orgdata for org5 in his charts.
 
 **Do / Don’t**
 - ✅ Do: keep names exactly as used for login.
@@ -43,50 +44,124 @@ It tells the Visualizer: *“When this person logs in, which org dataset(s) are 
 
 ### Step 2) Prepare your org data file (this is what the Visualizer reads)
 
-There are two important files that define the “rules”:
+There are two important files that define the “rules.” These two files basically decide **(1) what the dashboard shows** and **(2) what your CSV must look like**.
 
-#### `school-system.constructs.js` (the “framework dictionary”)
-This file defines the measurement model:
-- which **Constructs** exist
-- which **Subconstructs** belong to each construct
-- which **Items/Questions** belong to each subconstruct
-- what each item is called (and what the Visualizer uses as the key)
+#### `js/school-system.constructs.js` (the “framework dictionary”)
+This file does **NOT** point to your CSV. It only defines the **6 construct boxes** and the subconstruct blurbs/labels that appear in the UI.
 
-**Translation:** this file decides what the Visualizer thinks the framework *is*.
+For example, this entry:
 
-**Quick example (what it means in practice):**
-- If `school-system.constructs.js` says the item is called `I feel safe at school`, then your CSV must have a column header that matches that (exactly).
-- If it says the item key is `TS_Q12`, then your CSV must have a column called `TS_Q12`.
+```js
+'school-system': {
+  headerTitle: 'SCHOOL AND SYSTEM CONDITION',
+  groupA: { title: 'HQIM Coherence:' },
+  groupB: { title: 'Foundational Structures:' }
+}
+```
 
-#### `school-system.data.js` (the “data wiring”)
-This file tells the Visualizer:
-- what your **data file is named**
-- where your data lives (path/location)
-- what **columns the Visualizer will look for**
-- how to interpret key fields (date/org identifiers/etc.)
+means:
 
-**Translation:** this file decides how the Visualizer reads *your CSVs*.
+You will see a box called SCHOOL AND SYSTEM CONDITION
+Inside it you will see Group A = HQIM Coherence and Group B = Foundational Structures
+This file is UI labels only (it does not decide which CSV columns get averaged)
 
-**Quick example (what it means in practice):**
-- If `school-system.data.js` points to `data/org5_ELA_V1.csv`, then that file must exist in that folder.
-- If it expects a column named `date`, your CSV needs a `date` column.
+✅ If you are only adding new org data, you usually do not touch this file.
 
----
+```js
+js/school-system.data.js (the “data wiring”)
+```
 
-### Step 3) Name your data files correctly (so the Visualizer finds them)
-1. Put your CSV files in the expected data folder (where `school-system.data.js` says they should be).
-2. Use the exact file naming pattern the Visualizer expects.  
-   This version is limited to expecting:  
-   `org<number>_NameOfDataAlignedWithELAMeasuresV1_csv`
-3. For this version, you cannot invent a new naming scheme unless you also update `school-system.data.js`.
+This file is the one that actually connects the Visualizer to your CSV data.
+It defines, per construct, which survey sets exist, which CSV file each one loads, and which columns (questions) it averages.
 
-**Quick example**
-- ✅ `org5_TeacherSurveyAlignedWithELAMeasuresV1_csv`
-- ✅ `org12_LeaderSurveyAlignedWithELAMeasuresV1_csv`
-- ❌ `Org5 Teacher Survey.csv` (wrong pattern)
-- ❌ `org5_teachersurvey.csv` (wrong pattern)
+```js
+{
+  label: "(A) HQIM Coherence - Teacher Survey",
+  fileOf: (org) => `orgdata/${org}_teacher_survey.csv`,
+  questions: [
+    "How well does your school leaders' vision for instruction align with your adopted curriculum?"
+  ]
+}
+```
 
-**If you’re not sure:** open `school-system.data.js` and copy the existing pattern.
+This means, very literally:
+
+The Visualizer will look for a file named:
+orgdata/<org>_teacher_survey.csv
+
+Inside that CSV, it will look for a column named exactly:
+How well does your school leaders' vision for instruction align with your adopted curriculum?
+
+It will average that column’s values (after grouping by month) and plot it for that survey set.
+
+So if your CSV column header is even slightly different (extra spaces, different punctuation, different capitalization), it won’t match, and it will look like “no data.”
+
+Step 3) Name your data files correctly (so the Visualizer finds them)
+
+In THIS version, the actual filename pattern is not the org<number>_NameOfDataAlignedWithELAMeasuresV1_csv thing — the pattern is whatever fileOf(org) returns inside js/school-system.data.js.
+
+In your current config, it expects files like:
+
+```js
+orgdata/org5_teacher_survey.csv
+orgdata/org5_school_leader_survey.csv
+orgdata/org5_admin_pulse_check.csv
+orgdata/org5_teacher_pulse_check.csv
+orgdata/org5_non_teacher_pl_participant.csv
+orgdata/org5_classroom_observation.csv
+```
+
+Quick example (for org5)
+If your usermap gives someone access to org5, the Visualizer will try to load:
+
+Teacher Survey:
+orgdata/org5_teacher_survey.csv
+
+School Leader Survey:
+orgdata/org5_school_leader_survey.csv
+
+Classroom Observations (if used in a construct):
+orgdata/org5_classroom_observation.csv
+
+✅ So the “right” filenames are literally whatever the code says here:
+
+```js
+fileOf: (org) => `orgdata/${org}_teacher_survey.csv`
+```
+
+Meaning:
+
+${org} becomes org5
+
+final filename becomes orgdata/org5_teacher_survey.csv
+
+Do / Don’t
+
+✅ Do: put the files inside the orgdata/ folder (because the path includes orgdata/).
+✅ Do: name them exactly like the pattern above (including underscores).
+❌ Don’t: rename files to “prettier” names unless you also update every fileOf() that points to them.
+
+Mini checklist (if you want the fastest “will it load?” validation)
+
+For one survey set like:
+
+```js
+   fileOf: (org) => `orgdata/${org}_teacher_survey.csv`,
+   questions: [
+     "Do you have sufficient time to engage in professional learning focused on [curriculum]?"
+   ]
+```
+
+Your CSV must have:
+
+a date column (in DD/MM/YYYY)
+
+a column with header exactly:
+Do you have sufficient time to engage in professional learning focused on [curriculum]?
+
+numeric values in that column (e.g., 1–5)
+
+If any of those are missing, the graph will look blank.
 
 ---
 
