@@ -433,53 +433,116 @@ Again same structure, but optimized for org-vs-global monthly pairings and LOESS
 ## 📟 Dev FAQs: Customizing the Visualizer for New Frameworks
 
 ### **Q: I want to add a new construct. What do I edit?**
-**A:** Two files:
+**A:** Two files (and they do different jobs):
 
-1. `school-system.constructs.js` — add a new construct entry with A/B/C groups  
-2. `school-system.data.js` — add a matching entry inside `DATA_CONFIGS` with radar/overall/milestone/scatter blocks
+1) `js/school-system.constructs.js` — **UI labels only**  
+   This controls:
+   - the construct box title (headerTitle/headerSubtitle)
+   - the A/B/C group titles + blurbs shown on the page
 
-And make sure your homepage button calls:
+   Example (this is why you see the “SCHOOL AND SYSTEM CONDITION” box with A/B labels):
+
+   ```js
+   'school-system': {
+     headerTitle: 'SCHOOL AND SYSTEM CONDITION',
+     headerSubtitle: 'HQIM implementation is supported by and integrated with existing infrastructure',
+     groupA: { title: 'HQIM Coherence:' },
+     groupB: { title: 'Foundational Structures:' }
+   }
+   ```
+
+2) `js/school-system.data.js` — **data wiring**  
+   This controls:
+   - which CSV file gets loaded per org (`fileOf(org)`)
+   - which question columns get averaged (`questions[]`)
+   - which survey sets appear in each chart type (radar/overall/milestone/scatter)
+
+   Example (this is literally where the Visualizer learns what to plot):
+
+   ```js
+   'school-system': {
+     overall: {
+       surveySets: [
+         {
+           label: '(A) HQIM Coherence - Teacher Survey',
+           color: '#A98FD4',
+           fileOf: (org) => `orgdata/${org}_teacher_survey.csv`,
+           questions: [
+             "How well does your school leaders' vision for instruction align with your adopted curriculum?"
+           ]
+         }
+       ]
+     }
+   }
+   ```
+
+✅ Then make sure your homepage button calls the new construct id:
 
 ```js
 setCurrentConstructAndRefresh('new-construct-id');
 ```
 
+✅ **Important rule:**  
+The `new-construct-id` must match in **all 3 places**:
+- the key you add in `CONFIGS` (constructs.js)
+- the key you add in `DATA_CONFIGS` (data.js)
+- the string passed to `setCurrentConstructAndRefresh(...)`
+
 ---
 
 ### **Q: I want to add a question to an existing construct.**
+**A:** Edit **only** `js/school-system.data.js`.
 
-Edit **only** `school-system.data.js`.
+Find the construct you want (example: `'school-system'`) and then add your question in the correct chart block.
 
-Find the correct view:
+Example: adding a question to the **overall** chart under **(A) HQIM Coherence - Teacher Survey**:
 
+```js
+{
+  label: '(A) HQIM Coherence - Teacher Survey',
+  color: '#A98FD4',
+  fileOf: (org) => `orgdata/${org}_teacher_survey.csv`,
+  questions: [
+    "How well does your school leaders' vision for instruction align with your adopted curriculum?",
+    "NEW QUESTION TEXT HERE (must match CSV column header exactly)"
+  ]
+}
+```
+
+Where you can add questions (depends on which chart you want it to appear in):
 - `radar.surveySets[x].questions[]`
 - `overall.surveySets[x].questions[]`
 - `milestone.sets[x].questions[]`
 - `scatter.SURVEY_SETS[x].questions[]`
 
-Add your new question text **exactly matching the CSV column header**.
-
-No other files need changes.
+✅ The question text must **exactly match the CSV column header** (spacing/punctuation/capitalization must match). I removed the comma's just to be sure it doesn't conflict with the .csv nature of csv files.
 
 ---
 
 ### **Q: My construct now uses a different CSV source.**
+**A:** Change the `fileOf(org)` function in `js/school-system.data.js`.
 
-Change the `fileOf(org)` function in `school-system.data.js`.
+Example (existing pattern):
 
-Example:
+```js
+fileOf: (org) => `orgdata/${org}_teacher_survey.csv`
+```
+
+If you want a new file:
 
 ```js
 fileOf: (org) => `orgdata/${org}_teacher_survey_2025.csv`
 ```
 
-Make sure the CSV exists for each org.
+✅ Then you must actually create those files, per org:
+- `orgdata/org1_teacher_survey_2025.csv` to
+- `orgdata/org5_teacher_survey_2025.csv`
+- etc.
 
 ---
 
 ### **Q: My new instructional framework doesn’t map neatly into this structure. What can I do?**
-
-You can often reshape your framework into:
+**A:** You can often reshape your framework into the Visualizer’s shape:
 
 ```
 construct
@@ -489,33 +552,163 @@ construct
   → scatter: SURVEY_SETS[]
 ```
 
-Each entry defines:
+Each entry is always the same idea:
+- a label
+- a CSV source (`fileOf(org)`)
+- a list of questions (`questions[]`) to average
 
-- A label  
-- A CSV source  
-- A list of questions to aggregate  
-
-If your data **can** be reorganized into:
-
-```
-date, org, Question1, Question2, ...
-```
-
-…then the visualizer will work automatically.
-
-If your framework has more complex structure (multiple levels, logs, coded events), you should:
-
-- Preprocess your raw data into CSV files that fit this schema  
-- OR write a short cleaning script that outputs the appropriate columns  
-
-**As long as your CSVs match:**
+#### The “simple rule” to make the Visualizer work
+Your CSV needs to look like:
 
 ```
-fileOf(org) → CSV
-questions[] → exact column names with numeric values
+date, Question1, Question2, Question3, ...
 ```
 
-the visualizer will fully support the framework — no chart code modifications required.
+…and your config needs to point to it like your current configs do:
+
+```js
+fileOf: (org) => `orgdata/${org}_teacher_survey.csv`,
+questions: [
+  "Exact Question Column Header 1",
+  "Exact Question Column Header 2"
+]
+```
+
+#### Preprocess your data — what that means in real life
+If your raw data is messy (multiple levels, logs, coded events), do this:
+
+1) Create a cleaned CSV per org in `orgdata/`
+2) Make sure it has:
+   - `date` column (DD/MM/YYYY)
+   - question columns that match what you put in `questions[]`
+   - numeric values in those columns
+
+Then the Visualizer works without touching chart code.
+
+---
+
+### **Q: The server is using port 8000 — can we change it?**
+**A:** Yes, the port is hardcoded in **multiple places**, so you need to change it consistently.
+
+---
+
+#### ✅ Where port **8000** is currently coming from (in your actual files)
+
+**1) `libraries/server.py`**
+At the top:
+
+```py
+PORT = 8000
+```
+
+And later it uses that same value here:
+
+```py
+server_address = ("0.0.0.0", PORT)
+print(f"[server] v5 running ... http://localhost:{PORT}/ ...")
+```
+
+**2) `runserver.bat`**
+This line opens the browser:
+
+```bat
+start msedge http://localhost:8000/index.html
+```
+
+**3) `runclient.bat`**
+This line defines the port:
+
+```bat
+set PORT=8000
+```
+
+**4) `client.bat` (your “fixed host IP” launcher)**
+This line defines the host port:
+
+```bat
+set HOST_PORT=8000
+```
+
+---
+
+#### ✅ How to change it (example: move this Visualizer to port **8011**)
+
+Pick a new port (example: `8011`), then do these edits:
+
+**1) Edit `libraries/server.py`**
+Change:
+
+```py
+PORT = 8000
+```
+
+to:
+
+```py
+PORT = 8011
+```
+
+**2) Edit `runserver.bat`**
+Change:
+
+```bat
+start msedge http://localhost:8000/index.html
+```
+
+to:
+
+```bat
+start msedge http://localhost:8011/index.html
+```
+
+**3) Edit `runclient.bat`**
+Change:
+
+```bat
+set PORT=8000
+```
+
+to:
+
+```bat
+set PORT=8011
+```
+
+**4) Edit `client.bat` (fixed IP launcher)**
+Change:
+
+```bat
+set HOST_PORT=8000
+```
+
+to:
+
+```bat
+set HOST_PORT=8011
+```
+
+---
+
+#### ✅ After you change the port, how to run (so it actually works)
+
+1) Close any old server windows that were running on `:8000`
+2) Run `runserver.bat` again  
+   - You should see a line like:  
+     `[server] v5 running ... http://localhost:8011/ ...`
+3) Run `runclient.bat` (or `client.bat`)  
+   - It should open the browser at `http://localhost:8011/...` (or `http://192.168.100.27:8011/...`)
+
+---
+
+#### Common oops (quick fix)
+- If you changed `runclient.bat` but forgot `server.py`, the browser opens `:8011` but the server is still on `:8000` → you’ll get “site can’t be reached.”
+- If you changed `server.py` but forgot `client.bat`, the fixed-IP launcher will still open `:8000` → same problem.
+
+**Rule:** the port must match in **server.py + whichever BAT file you use to open the browser**.
+
+
+---
+
 
 
 ## 📊 Interactive Graph Types in RPPL Insights
