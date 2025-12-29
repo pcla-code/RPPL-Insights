@@ -478,7 +478,7 @@ It is intentionally **non-hard-coded**: as long as a file has a date column and 
 ```text
 RPPL-Insights/
 ├─ converter/
-│  ├─ converter.html            # Converter UI (can be renamed index.html if preferred)
+│  ├─ index.html                # Converter UI (can be renamed <preferred name>.html)
 │  ├─ converter.css             # Layout & theming
 │  └─ converter.js              # All converter logic (parsing, mapping, queue, export)
 ```
