@@ -21,6 +21,8 @@ Together, the four views give teams a complete understanding of their CBPL and H
 [![Milestone – Goal Tracking](https://badgen.net/badge/View/Progress%20Towards%20Goals/green)](#3-progress-towards-goals-chart)
 [![Scatterplot – Item Relationships](https://badgen.net/badge/View/Item%20Level%20Relationships/orange)](#4-scatterplot--org-vs-global-relationship-view)
 
+## Using the tool
+
 ## ⚙️ Installation & Requirements
 
 RPPL Insights v2.0 runs entirely on a **local Python server** and serves fully static HTML/CSS/JS files. No internet access or external APIs are required. The system is designed to operate inside restricted research environments (including Stronghold) where data files must never be directly accessible through the browser.
@@ -51,9 +53,6 @@ RPPL-Insights/
 │  ├─ school-system.radar.js
 │  ├─ school-system.scatter.js
 │  └─ school-system.tutorial.js
-│
-├─ legacy/                     # Old non-modularized v1 files (kept for reference)
-│  └─ (archived .js files)
 │
 ├─ libraries/                  # Chart.js, Luxon, PapaParse, Python server logic
 │  ├─ chart.js
