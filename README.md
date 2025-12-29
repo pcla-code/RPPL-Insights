@@ -23,6 +23,129 @@ Together, the four views give teams a complete understanding of their CBPL and H
 
 ## Using the tool
 
+### Step 1) Decide who can access which org data (the **usermap**)
+1. Open the usermap file at `config/usermap` (this is essentially your “permissions list”).
+2. Add a user if you want them to access an org’s dataset by adding a new line in this format:  
+   `username,org,password`  
+   Example: `Neithan,org5,v9D2Q`
+3. Remove a user if you want to revoke access by deleting that user’s entire line (including the newline).
+4. Save the file.
+
+**What the usermap does (in plain terms):**  
+It tells the Visualizer: *“When this person logs in, which org dataset(s) are they allowed to see?”*
+
+**Do / Don’t**
+- ✅ Do: keep names exactly as used for login.
+- ✅ Do: double-check spelling (one typo = no access).
+- ❌ Don’t: rename the usermap file unless the code explicitly points to the new name.
+
+---
+
+### Step 2) Prepare your org data file (this is what the Visualizer reads)
+
+There are two important files that define the “rules”:
+
+#### `school-system.constructs.js` (the “framework dictionary”)
+This file defines the measurement model:
+- which **Constructs** exist
+- which **Subconstructs** belong to each construct
+- which **Items/Questions** belong to each subconstruct
+- what each item is called (and what the Visualizer uses as the key)
+
+**Translation:** this file decides what the Visualizer thinks the framework *is*.
+
+**Quick example (what it means in practice):**
+- If `school-system.constructs.js` says the item is called `I feel safe at school`, then your CSV must have a column header that matches that (exactly).
+- If it says the item key is `TS_Q12`, then your CSV must have a column called `TS_Q12`.
+
+#### `school-system.data.js` (the “data wiring”)
+This file tells the Visualizer:
+- what your **data file is named**
+- where your data lives (path/location)
+- what **columns the Visualizer will look for**
+- how to interpret key fields (date/org identifiers/etc.)
+
+**Translation:** this file decides how the Visualizer reads *your CSVs*.
+
+**Quick example (what it means in practice):**
+- If `school-system.data.js` points to `data/org5_ELA_V1.csv`, then that file must exist in that folder.
+- If it expects a column named `date`, your CSV needs a `date` column.
+
+---
+
+### Step 3) Name your data files correctly (so the Visualizer finds them)
+1. Put your CSV files in the expected data folder (where `school-system.data.js` says they should be).
+2. Use the exact file naming pattern the Visualizer expects.  
+   This version is limited to expecting:  
+   `org<number>_NameOfDataAlignedWithELAMeasuresV1_csv`
+3. For this version, you cannot invent a new naming scheme unless you also update `school-system.data.js`.
+
+**Quick example**
+- ✅ `org5_TeacherSurveyAlignedWithELAMeasuresV1_csv`
+- ✅ `org12_LeaderSurveyAlignedWithELAMeasuresV1_csv`
+- ❌ `Org5 Teacher Survey.csv` (wrong pattern)
+- ❌ `org5_teachersurvey.csv` (wrong pattern)
+
+**If you’re not sure:** open `school-system.data.js` and copy the existing pattern.
+
+---
+
+### Step 4) Name your columns correctly (this is the #1 reason things don’t show up)
+1. Open your CSV.
+2. Make sure column headers match what the Visualizer expects **exactly**.
+
+Most important column rules for V1:
+- If the Visualizer expects a column called `date`, it must be `date` (not `Date`, not `DATE`).
+- If items are keyed by exact question text, your column header must match the exact question text.
+- If items are keyed by item codes, your column header must match the item code.
+
+**If your columns don’t match, the Visualizer won’t “guess.”** It will just show blanks.
+
+---
+
+### Step 5) Don’t edit the wrong files (so you don’t break the app)
+**Files you usually change:**
+- ✅ `config/usermap` (permissions)
+- ✅ your org CSV data files
+- ✅ (only if needed) `school-system.data.js` to point to new filenames/paths
+
+**Files you should NOT change unless you’re updating the measurement model:**
+- ❌ `school-system.constructs.js` (this defines the framework; changing it changes the model)
+- ❌ core Visualizer graph code (unless you are doing dev work)
+
+---
+
+### Step 6) Quick sanity check (the “did I wire it right?” test)
+1. Log in as a user who should have access (per usermap).
+2. Check that the org dataset appears.
+3. Open a basic graph:
+   - if nothing shows up, it’s usually:
+     - wrong filename
+     - wrong folder/path
+     - wrong column headers
+     - user not included in usermap
+
+---
+
+### Step 7) You are now ready to run 🚀
+
+#### Option A) Run the server (backend)
+1. Double-click `runserver.bat`
+2. Leave that window open (don’t close it).
+3. If it shows an error, copy-paste the last lines into chat so we can diagnose.
+
+#### Option B) Run the client (frontend)
+1. Double-click `runclient.bat`
+2. A browser tab should open automatically (or it will print a local URL like `http://localhost:____`).
+3. Keep that window open while you use the Visualizer.
+
+#### Most common “oops” when running
+- If the client runs but nothing loads, the server might not be running.
+- If you get a port error, it usually means something else is already using that port.
+
+That's about everything :)
+if usermap + file names + column names match what the Visualizer expects, it will load.
+
 ## ⚙️ Installation & Requirements
 
 RPPL Insights v2.0 runs entirely on a **local Python server** and serves fully static HTML/CSS/JS files. No internet access or external APIs are required. The system is designed to operate inside restricted research environments (including Stronghold) where data files must never be directly accessible through the browser.
