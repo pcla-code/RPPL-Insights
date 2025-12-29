@@ -420,31 +420,33 @@ If the entered month is in the future (i.e., not present in the dataset yet), th
 
 ---
 
-### **4. Scatterplot — Org vs Global Relationship View**
+### **4. Item Level Relationships Chart**
 
 https://github.com/user-attachments/assets/9a724293-d1c3-4730-8362-e0ace6287d61
 
-The scatterplot shows the relationship between **your organization’s monthly scores** and the **global averages**.
+The scatterplot shows the relationship between **two selected measures at the item level**.
 
-Each point represents a month.  
-X = Your Org  
-Y = Global Average  
-A diagonal identity line marks parity.
+Each point represents an **item** (i.e., a question / rubric item).  
+**X =** Item score for Measure A  
+**Y =** Item score for Measure B  
+A diagonal identity line marks parity (**X = Y**).
 
-**What it shows**
-- How your org compares to global peers  
-- Whether scores trend above, below, or around parity  
-- Jittered points when multiple questions are selected  
+### What it shows
+- Which items score higher on Measure A vs Measure B
+- Whether the same items tend to be high/low together (alignment)
+- Clusters (items behaving similarly) and outliers (items diverging sharply)
+- Where strengths and gaps live **at the item level**, not averaged away
 
-**What users can do**
-- Select which survey sets to plot  
-- Highlight specific groups  
-- Explore outlier months or divergence patterns  
+### What users can do
+- Choose the two measures to compare (e.g., Subconstruct A vs Subconstruct B, or Construct vs Construct)
+- Switch which item set is being plotted (ELA surveys vs Classroom Observations, depending on what’s selected/available)
+- Hover items to see exact item text / item code
 
-**When to use it**
-- Comparing your org’s performance to global trends  
-- Identifying unusually strong or weak months  
-- Understanding subconstruct alignment  
+### When to use it
+- Checking if two subconstructs “move together” at the item level
+- Finding items where performance is strong in one measure but weak in the other
+- Spotting misalignment (e.g., strong planning items but weak enactment items)
+- Prioritizing action: outlier items are often the most actionable targets
 
 ---
 
