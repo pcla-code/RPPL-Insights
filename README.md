@@ -60,19 +60,18 @@ For example, this entry:
 ```
 
 means:
+- You will see a box called **SCHOOL AND SYSTEM CONDITION**
+- Inside it you will see **Group A = HQIM Coherence** and **Group B = Foundational Structures**
+- This file is **UI labels only** (it does not decide which CSV columns get averaged)
 
-You will see a box called SCHOOL AND SYSTEM CONDITION
-Inside it you will see Group A = HQIM Coherence and Group B = Foundational Structures
-This file is UI labels only (it does not decide which CSV columns get averaged)
+✅ If you are only adding new org data, you usually **do not touch this file**.
 
-✅ If you are only adding new org data, you usually do not touch this file.
-
-```js
-js/school-system.data.js (the “data wiring”)
-```
-
+#### `js/school-system.data.js` (the “data wiring”)
 This file is the one that actually connects the Visualizer to your CSV data.
+
 It defines, per construct, which survey sets exist, which CSV file each one loads, and which columns (questions) it averages.
+
+Here is a real example from your file:
 
 ```js
 {
@@ -85,43 +84,33 @@ It defines, per construct, which survey sets exist, which CSV file each one load
 ```
 
 This means, very literally:
-
-The Visualizer will look for a file named:
-orgdata/<org>_teacher_survey.csv
-
-Inside that CSV, it will look for a column named exactly:
-How well does your school leaders' vision for instruction align with your adopted curriculum?
-
-It will average that column’s values (after grouping by month) and plot it for that survey set.
+- The Visualizer will look for a file named:  
+  `orgdata/<org>_teacher_survey.csv`
+- Inside that CSV, it will look for a column named **exactly**:  
+  `How well does your school leaders' vision for instruction align with your adopted curriculum?`
+- It will average that column’s values (after grouping by month) and plot it for that survey set.
 
 So if your CSV column header is even slightly different (extra spaces, different punctuation, different capitalization), it won’t match, and it will look like “no data.”
 
-Step 3) Name your data files correctly (so the Visualizer finds them)
+---
 
-In THIS version, the actual filename pattern is not the org<number>_NameOfDataAlignedWithELAMeasuresV1_csv thing — the pattern is whatever fileOf(org) returns inside js/school-system.data.js.
+### Step 3) Name your data files correctly (so the Visualizer finds them)
+
+In THIS version, the actual filename pattern is **not** the `org<number>_NameOfDataAlignedWithELAMeasuresV1_csv` thing — the pattern is whatever `fileOf(org)` returns inside `js/school-system.data.js`.
 
 In your current config, it expects files like:
+- `orgdata/org5_teacher_survey.csv`
+- `orgdata/org5_school_leader_survey.csv`
+- `orgdata/org5_admin_pulse_check.csv`
+- `orgdata/org5_teacher_pulse_check.csv`
+- `orgdata/org5_non_teacher_pl_participant.csv`
+- `orgdata/org5_classroom_observation.csv`
 
-```js
-orgdata/org5_teacher_survey.csv
-orgdata/org5_school_leader_survey.csv
-orgdata/org5_admin_pulse_check.csv
-orgdata/org5_teacher_pulse_check.csv
-orgdata/org5_non_teacher_pl_participant.csv
-orgdata/org5_classroom_observation.csv
-```
-
-Quick example (for org5)
-If your usermap gives someone access to org5, the Visualizer will try to load:
-
-Teacher Survey:
-orgdata/org5_teacher_survey.csv
-
-School Leader Survey:
-orgdata/org5_school_leader_survey.csv
-
-Classroom Observations (if used in a construct):
-orgdata/org5_classroom_observation.csv
+**Quick example (for org5)**  
+If your usermap gives someone access to `org5`, the Visualizer will try to load:
+- Teacher Survey: `orgdata/org5_teacher_survey.csv`
+- School Leader Survey: `orgdata/org5_school_leader_survey.csv`
+- Classroom Observations (if used in a construct): `orgdata/org5_classroom_observation.csv`
 
 ✅ So the “right” filenames are literally whatever the code says here:
 
@@ -130,36 +119,32 @@ fileOf: (org) => `orgdata/${org}_teacher_survey.csv`
 ```
 
 Meaning:
+- `${org}` becomes `org5`
+- final filename becomes `orgdata/org5_teacher_survey.csv`
 
-${org} becomes org5
+**Do / Don’t**
+- ✅ Do: put the files inside the `orgdata/` folder (because the path includes `orgdata/`).
+- ✅ Do: name them exactly like the pattern above (including underscores).
+- ❌ Don’t: rename files to “prettier” names unless you also update every `fileOf()` that points to them.
 
-final filename becomes orgdata/org5_teacher_survey.csv
+---
 
-Do / Don’t
-
-✅ Do: put the files inside the orgdata/ folder (because the path includes orgdata/).
-✅ Do: name them exactly like the pattern above (including underscores).
-❌ Don’t: rename files to “prettier” names unless you also update every fileOf() that points to them.
-
-Mini checklist (if you want the fastest “will it load?” validation)
+### Mini checklist (fastest “will it load?” validation)
 
 For one survey set like:
 
 ```js
-   fileOf: (org) => `orgdata/${org}_teacher_survey.csv`,
-   questions: [
-     "Do you have sufficient time to engage in professional learning focused on [curriculum]?"
-   ]
+fileOf: (org) => `orgdata/${org}_teacher_survey.csv`,
+questions: [
+  "Do you have sufficient time to engage in professional learning focused on [curriculum]?"
+]
 ```
 
 Your CSV must have:
-
-a date column (in DD/MM/YYYY)
-
-a column with header exactly:
-Do you have sufficient time to engage in professional learning focused on [curriculum]?
-
-numeric values in that column (e.g., 1–5)
+- a `date` column (in `DD/MM/YYYY`)
+- a column header exactly:  
+  `Do you have sufficient time to engage in professional learning focused on [curriculum]?`
+- numeric values in that column (e.g., 1–5)
 
 If any of those are missing, the graph will look blank.
 
