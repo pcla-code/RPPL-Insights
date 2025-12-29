@@ -375,7 +375,6 @@ This chart shows how scores evolve **month-by-month**, letting leaders track cha
 - Line for **Your Org**  
 - Line for **Global Average**  
 - Distinct dash patterns per subconstruct  
-- Optional “Net Difference” mode (Your Org minus Global Average)  
 
 **What users can do**
 - Switch chart modes using **Chart Mode**:  
@@ -401,6 +400,8 @@ The Progress Towards Goals view answers:
 > **“When did we first meet our target?”**
 
 Users define a condition (e.g., `>= 3.4`) and the chart identifies the first month when that threshold is met for each survey set.
+Users can also enter a specific month in the Month input box in the format, “November 2025” or “11/2025”, and the chart will place a marker on that month.
+If the entered month is in the future (i.e., not present in the dataset yet), the chart will extend the timeline to include it and place the marker there.
 
 **What it shows**
 - First month each group meets the threshold  
