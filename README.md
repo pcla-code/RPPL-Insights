@@ -244,6 +244,7 @@ RPPL-Insights/
 │  ├─ luxon.min.js
 │  ├─ papaparse.min.js
 │  ├─ client.py                # Client-side Python helper (Stronghold)
+│  ├─ xlsx.full.min.js         # Standalone browser script for reading excel/csv files
 │  └─ server.py                # Secure Python server (blocks direct CSV access)
 │
 ├─ orgdata/                    # Organization CSV files (ELA framework aligned)
