@@ -245,6 +245,7 @@ RPPL-Insights/
 │  ├─ papaparse.min.js
 │  ├─ client.py                # Client-side Python helper (Stronghold)
 │  ├─ xlsx.full.min.js         # Standalone browser script for reading excel/csv files
+│  ├─ old-server.js            # legacy version of server.py (Kept for reference of how we adapted to Stronghold)*
 │  └─ server.py                # Secure Python server (blocks direct CSV access)
 │
 ├─ orgdata/                    # Organization CSV files (ELA framework aligned)
@@ -260,6 +261,7 @@ RPPL-Insights/
 └─ visualizer.html             # Visualization engine (Radar / Trends / Milestone / Scatter)
 
 ```
+*There was a point when our original server.js suddenly stopped working on Stronghold even though we hadn’t changed anything. Our assumption was that the Stronghold version running on the server had been updated. The current server.js is now adjusted to be Stronghold-version aware. We kept old-server.js as a reference to document the changes we had to make. This is left here so you’ll know what to check and adjust in case the same issue happens again.
 
 ### How It Works
 When launched, the Python server:
