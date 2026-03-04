@@ -733,7 +733,6 @@ The Org Snapshot Radar Chart gives a **one-screen snapshot** of how an organizat
 
 **What users can do**
 - Hover for exact values  
-- Toggle subconstruct groups (A, B, C)  
 - Use dynamic radar titles (pulled from constructs.js)  
 
 **When to use it**
