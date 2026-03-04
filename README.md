@@ -754,9 +754,6 @@ This chart shows how scores evolve **month-by-month**, letting leaders track cha
 - Distinct dash patterns per subconstruct  
 
 **What users can do**
-- Switch chart modes using **Chart Mode**:  
-  - `lines` (simple timeline)  
-  - `net` (difference timeline)  
 - Toggle subconstruct groups A/B/C  
 - Enable/disable **“Include my org in global average”**  
 - Access detailed tooltips including per-question breakdowns  
