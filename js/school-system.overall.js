@@ -229,31 +229,33 @@ async function renderChart() {
     });
 
     // GLOBAL — line + hollow markers
-    datasets.push({
-      label: `${p.label} (Global)`,
-      data: globalSeries,
-      // draw the line
-      borderColor: p.color,
-      borderWidth: 1.4,
-      borderDash: dash,
-      tension: 0,
-      fill: false,
+		// GLOBAL — line + hollow markers
+		datasets.push({
+			label: `${p.label} (Global)`,
+			data: globalSeries,
 
-      // hollow markers
-      pointRadius: GLOBAL_POINT_RADIUS,
-      pointHoverRadius: GLOBAL_POINT_HOVER_RADIUS,
-      pointHitRadius: 8,
-      pointStyle: glyph,
-      pointBackgroundColor: '#fff',
-      pointBorderColor: p.color,
-      pointBorderWidth: 2,
+			borderColor: p.color,
+			borderWidth: 1.4,
+			borderDash: dash,
+			tension: 0,
+			fill: false,
 
-      // metadata
-      meta: allMonths.map(m => ({ orgVal: p.yourMap[m] ?? null, globalAvg: p.globalMap[m] ?? null })),
-      questions: p.questions,
-      perQuestionMonthlyValues: p.perQOrg.map(obj => allMonths.map(m => obj[m] ?? null)),
-      globalQuestionMonthlyValues: p.perQGlobal.map(obj => allMonths.map(m => obj[m] ?? null))
-    });
+			pointRadius: GLOBAL_POINT_RADIUS,
+			pointHoverRadius: GLOBAL_POINT_HOVER_RADIUS,
+			pointHitRadius: 8,
+			pointStyle: glyph,
+			pointBackgroundColor: '#fff',
+			pointBorderColor: p.color,
+			pointBorderWidth: 2,
+
+			// ✅ ADD THIS:
+			noLine: true,
+
+			meta: allMonths.map(m => ({ orgVal: p.yourMap[m] ?? null, globalAvg: p.globalMap[m] ?? null })),
+			questions: p.questions,
+			perQuestionMonthlyValues: p.perQOrg.map(obj => allMonths.map(m => obj[m] ?? null)),
+			globalQuestionMonthlyValues: p.perQGlobal.map(obj => allMonths.map(m => obj[m] ?? null))
+		});
   }
 
   // ---- Chart ----
